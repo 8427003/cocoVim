@@ -1,0 +1,16 @@
+${FILENAME}	template.txt	/*${FILENAME}*
+${FileName}	template.txt	/*${FileName}*
+${author}	template.txt	/*${author}*
+${cursor}	template.txt	/*${cursor}*
+${datetime}	template.txt	/*${datetime}*
+${date}	template.txt	/*${date}*
+${filename}	template.txt	/*${filename}*
+:Template	template.txt	/*:Template*
+:new	template.txt	/*:new*
+filename.ext	template.txt	/*filename.ext*
+g:template_author	template.txt	/*g:template_author*
+g:template_dir	template.txt	/*g:template_dir*
+smarttemplate	template.txt	/*smarttemplate*
+smarttemplate-settings	template.txt	/*smarttemplate-settings*
+template.txt	template.txt	/*template.txt*
+template<Tab>	template.txt	/*template<Tab>*
