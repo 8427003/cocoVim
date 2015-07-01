@@ -6,12 +6,12 @@
 #install
 ##Source exVim to your current Vim
 
-1.Suppose you download/update exVim in the path ~/exvim. 
+1.Suppose you download/update exVim in the path ~/cocoVim. 
 
 2.Edit your vimrc file, default is ~/.vimrc in Mac/Linux and C:\Users\your_name\_vimrc in Windows.
 
 3.In your vimrc file, just write:
 
-<pre><code>let g:exvim_custom_path='~/exvim/'
-source ~/exvim/.vimrc
+<pre><code>let g:exvim_custom_path='~/cocoVim/'
+source ~/cocoVim/.vimrc
 </code></pre>
