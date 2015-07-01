@@ -515,6 +515,7 @@ if WINDOWS()
     :cd C:\Users\cocoo.li\Desktop\git
 elseif OSX()
     :cd ~/git
+    nmap <Leader><Leader><Leader> :ConqueTerm sh<CR>
 else
     :cd ~/git
 endif
