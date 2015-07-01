@@ -6,7 +6,7 @@
 #install
 ##Source cocoVim to your current Vim
 
-1.Suppose you download/update exVim in the path ~/cocoVim. 
+1.Suppose you download/update cocoVim in the path ~/cocoVim. 
 
 2.Edit your vimrc file, default is ~/.vimrc in Mac/Linux and C:\Users\your_name\_vimrc in Windows.
 
