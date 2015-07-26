@@ -15,3 +15,6 @@
 <pre><code>let g:exvim_custom_path='~/cocoVim/'
 source ~/cocoVim/.vimrc
 </code></pre>
+
+##其他一些增强功能可参照
+http://exvim.github.io/downloads/
