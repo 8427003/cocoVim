@@ -521,24 +521,20 @@ colorscheme molokai
 
 function! OpenBash()
     let path = expand("%:p:h")
-    let my_terminal = conque_term#open('sh')
+    let my_terminal = conque_term#open('bash')
     call conque_term#get_instance().writeln("cd ".path)
 endfunction
 
-nmap <Leader><Leader><Leader> :call OpenBash()<CR>
 
 
 " use English for anaything in vim-editor.
 if WINDOWS()
     :cd C:\Users\cocoo.li\Desktop\git
 elseif OSX()
-   " :cd ~/git
-    "let my_terminal = conque_term#open('sh')
-    "nmap <Leader><Leader><Leader> :ConqueTerm sh<CR>
-
-    "nmap <Leader><Leader><Leader> :ConqueTerm sh<CR>
+    :cd ~/git
+    nmap <Leader><Leader><Leader> :call OpenBash()<CR>
 else
-    ":cd ~/git
+    :cd ~/git
 endif
 
 
