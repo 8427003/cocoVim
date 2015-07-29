@@ -445,10 +445,15 @@ let g:vim_markdown_initial_foldlevel=9999
 function! OpenWithExplorer()
     "let currentPath = expand("%:p:h")
     let currentFile = expand("%:p")
-    call system("explorer /select,".currentFile)
+    call system("open".currentFile)
 endfunction
 command! -nargs=0 Ep call OpenWithExplorer()
+
+
 Plugin 'vim-scripts/Conque-Shell'
+
+let g:ConqueTerm_FastMode = 1 
+let g:ConqueTerm_StartMessages = 0 
 
 "template
 Plugin '8427003/template.vim'
@@ -508,20 +513,34 @@ vmap <silent> <expr> p <sid>Repl()
 "/////////////////////////////////////////////////////////////////////////////
 
 ":set cursorline
-:set autochdir "自动设当前编辑的文件所在目录为当前工作路径 
-:lcd %:p:h  "自动更改到当前文件所在的目录
+":set autochdir "自动设当前编辑的文件所在目录为当前工作路径 
+":lcd %:p:h  "自动更改到当前文件所在的目录
+
 colorscheme molokai 
+
+
+function! OpenBash()
+    let path = expand("%:p:h")
+    let my_terminal = conque_term#open('sh')
+    call conque_term#get_instance().writeln("cd ".path)
+endfunction
+
+nmap <Leader><Leader><Leader> :call OpenBash()<CR>
 
 
 " use English for anaything in vim-editor.
 if WINDOWS()
     :cd C:\Users\cocoo.li\Desktop\git
 elseif OSX()
-    :cd ~/git
-    nmap <Leader><Leader><Leader> :ConqueTerm sh<CR>
+   " :cd ~/git
+    "let my_terminal = conque_term#open('sh')
+    "nmap <Leader><Leader><Leader> :ConqueTerm sh<CR>
+
+    "nmap <Leader><Leader><Leader> :ConqueTerm sh<CR>
 else
-    :cd ~/git
+    ":cd ~/git
 endif
+
 
 " TEST {{{
 " " test-loading
