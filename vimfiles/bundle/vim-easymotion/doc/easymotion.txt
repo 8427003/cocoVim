@@ -1,4 +1,4 @@
-*easymotion.txt*	Version 2.0  Last change:21 Mar 2014.
+*easymotion.txt*	Version 2.1
 
 
             ______                  __  ___       __  _
@@ -309,7 +309,7 @@ Repeat ~
         downloaded here: https://github.com/justinmk/vim-sneak
 
 EasyMotion dot repeat~
-                                    *easymotion-dotrepeat* *easymotion-textobjct*
+                                    *easymotion-dotrepeat* *easymotion-textobject*
 
         This feature requires tpope/vim-repeat
         https://github.com/tpope/vim-repeat
@@ -622,33 +622,6 @@ Find Motion Command Line~
     __EXPERIMENTAL__. They could be changed in the near future. However, they
     work well and are very useful, so I've released them anyway for now.
 
-------------------------------------------------------------------------------
-2.3 Special mappings                              *easymotion-special-mappings*
-
-The default configuration defines the following mappings in visual and
-operator-pending mode if |g:EasyMotion_do_special_mapping| is on:
->
-        let g:EasyMotion_do_special_mapping = 1
-<
-Default: 0
-
-    Special Mapping      | Details
-    ---------------------|----------------------------------------------
-    {operator}<Leader>l  | Select, yank, paste, delete, or other operation of
-                         | lines. See |<Plug>(easymotion-special-l)|.
-    {operator}<Leader>p  | Select, yank, paste, delete, or other operation of
-                         | phrase. See |<Plug>(easymotion-special-p)|.
-
-Or you can map them yourself
-
-    <Plug> Mapping Table         | Details
-    -----------------------------|--------------------------------------
-    <Plug>(easymotion-special-l) | See |<Plug>(easymotion-special-l)|
-    <Plug>(easymotion-special-p) | See |<Plug>(easymotion-special-p)|
-
-
-See |easymotion-leader-key| and |mapleader| for details about the leader key.
-
 ==============================================================================
 Requirements                                          *easymotion-requirements*
 
@@ -661,7 +634,7 @@ Vi-compatible mode must be disabled.
 If your vim version is causing you problems with using this plugin, feel free
 to open an issue on github!
 
-Link: https://github.com/Lokaltog/vim-easymotion/issues
+Link: https://github.com/easymotion/vim-easymotion/issues
 
 ==============================================================================
 Configuration                                        *easymotion-configuration*
@@ -983,6 +956,11 @@ to groups with default values. The highlighting groups are:
     * EasyMotionShade
 
       Highlights shaded text, the default value is dark gray
+      
+    * EasyMotionMoveHL
+    
+      Highlights matched pattern of "/" command.
+      
 
 There are two ways to override the default colors:
 
@@ -999,6 +977,8 @@ There are two ways to override the default colors:
 
           hi EasyMotionTarget2First ctermbg=none ctermfg=red
           hi EasyMotionTarget2Second ctermbg=none ctermfg=lightred
+          
+          hi EasyMotionMoveHL ctermbg=green ctermfg=black
 <
    2) Set the highlighting in your vimrc
 
@@ -1015,6 +995,8 @@ There are two ways to override the default colors:
 
           hi link EasyMotionTarget2First MatchParen
           hi link EasyMotionTarget2Second MatchParen
+          
+          hi link EasyMotionMoveHL Search
 <
 
 Use CSApprox                                        *EasyMotion_force_csapprox*
@@ -1068,14 +1050,32 @@ and their default values.
 ==============================================================================
 License                                                    *easymotion-license*
 
-Creative Commons Attribution-ShareAlike 3.0 Unported
+License: MIT license
 
-http://creativecommons.org/licenses/by-sa/3.0/
+Copyright (c) 2014-2015 Kim Silkebækken, haya14busa
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
 
 ==============================================================================
 Known bugs                                              *easymotion-known-bugs*
 
-See: https://github.com/Lokaltog/vim-easymotion/issues
+See: https://github.com/easymotion/vim-easymotion/issues
 
 Pull Requests are welcome! :)
 
@@ -1088,7 +1088,7 @@ have any code improvements.
 
 Author: Kim Silkebækken <kim.silkebaekken+vim@gmail.com>
         haya14busa <hayabusa1419@gmail.com> (since version 2.0)
-Source repository: https://github.com/Lokaltog/vim-easymotion
+Source repository: https://github.com/easymotion/vim-easymotion
 
 
 ==============================================================================
@@ -1107,7 +1107,7 @@ Credits                                                    *easymotion-credits*
 - mattn: fix multibyte handling
 - yuex: fix visual mode selection bug (o command)
 
-and more!: https://github.com/Lokaltog/vim-easymotion/graphs/contributors
+and more!: https://github.com/easymotion/vim-easymotion/graphs/contributors
 
 EasyMotion is based on Bartlomiej Podolak's great PreciseJump script, which
 can be downloaded here:

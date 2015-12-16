@@ -1,5 +1,5 @@
-" This script catches the <Tab> character when using the '/' search 
-" command.  Pressing Tab will expand the current partial word to the 
+" This script catches the <Tab> character when using the '/' search
+" command.  Pressing Tab will expand the current partial word to the
 " next matching word starting with the partial word.
 " If you want to match a tab, use the '\t' pattern.
 
@@ -35,30 +35,30 @@ endfunction
 " Desc: Tab completion in / search
 function s:search_compl(forward)
     let jump = 1
-    if s:init_search_input == 1 
+    if s:init_search_input == 1
         let s:usr_input = getcmdline()
         let s:init_search_input = 0
         let jump = 0
     endif
 
     let cmdline = getcmdline()
-    let result = s:get_next_match_result(jump,a:forward) 
-    let s:result = substitute(cmdline, ".", "\<c-h>", "g") . result 
+    let result = s:get_next_match_result(jump,a:forward)
+    let s:result = substitute(cmdline, ".", "\<c-h>", "g") . result
     return s:result
 endfunction
 
 " s:get_next_match_result {{{2
 function s:get_next_match_result( jump, forward )
     " first time search needn't jump
-    if a:jump 
+    if a:jump
         if a:forward == 1
             silent call search ( s:usr_input, 'cwe' )
         else
             silent call search ( s:usr_input, 'bwe' )
         end
 
-        " cause the / search mechanism don't allow cursor jump (though it jumped.), 
-        " so for next search result, it will get the whole word 
+        " cause the / search mechanism don't allow cursor jump (though it jumped.),
+        " so for next search result, it will get the whole word
         let cur_word = expand('<cword>')
         return '\<'.cur_word.'\>'
     endif
@@ -78,6 +78,7 @@ endfunction
 " s:search_compl_stop {{{2
 " Desc: Remove search complete mappings
 function s:search_compl_stop()
+    cunmap <S-Tab>
     cunmap <Tab>
     cunmap <CR>
     cunmap <Esc>

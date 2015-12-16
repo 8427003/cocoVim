@@ -100,42 +100,13 @@ function! neocomplete#helper#is_enabled_source(source, filetype) "{{{
         \ : a:source
 
   return !empty(source) && (empty(source.filetypes) ||
-        \     !empty(neocomplete#helper#ftdictionary2list(
-        \      source.filetypes, a:filetype)))
+        \     neocomplete#helper#check_filetype(source.filetypes))
         \  && (!get(source.disabled_filetypes, '_', 0) &&
-        \      empty(neocomplete#helper#ftdictionary2list(
-        \      source.disabled_filetypes, a:filetype)))
+        \      !neocomplete#helper#check_filetype(source.disabled_filetypes))
 endfunction"}}}
 
 function! neocomplete#helper#get_source_filetypes(filetype) "{{{
-  let filetype = (a:filetype == '') ? 'nothing' : a:filetype
-
-  let filetypes = [filetype]
-  if filetype =~ '\.'
-    if exists('g:neocomplete#ignore_composite_filetypes')
-          \ && has_key(g:neocomplete#ignore_composite_filetypes, filetype)
-      let filetypes = [g:neocomplete#ignore_composite_filetypes[filetype]]
-    else
-      " Set composite filetype.
-      let filetypes += split(filetype, '\.')
-    endif
-  endif
-
-  if exists('g:neocomplete#same_filetypes')
-    for ft in copy(filetypes)
-      let filetypes += split(get(g:neocomplete#same_filetypes, ft,
-            \ get(g:neocomplete#same_filetypes, '_', '')), ',')
-    endfor
-  endif
-  if neocomplete#is_text_mode()
-    call add(filetypes, 'text')
-  endif
-
-  if len(filetypes) > 1
-    let filetypes = neocomplete#util#uniq(filetypes)
-  endif
-
-  return filetypes
+  return neocomplete#context_filetype#filetypes()
 endfunction"}}}
 
 function! neocomplete#helper#complete_check() "{{{
@@ -200,7 +171,6 @@ do
   local patterns = vim.eval('keyword_patterns')
   local filetypes = vim.eval("split(a:filetype, '\\.')")
   local pattern_var = vim.eval('a:pattern_var')
-  local same_filetypes = vim.eval('get(g:, "neocomplete#same_filetypes", {})')
 
   local dup_check = {}
   for i = 0, #filetypes-1 do
@@ -210,16 +180,6 @@ do
     if pattern_var[ft] ~= nil and dup_check[ft] == nil then
       dup_check[ft] = 1
       patterns:add(pattern_var[ft])
-    end
-
-    -- Same filetype.
-    if same_filetypes[ft] ~= nil then
-      for ft in string.gmatch(same_filetypes[ft], '[^,]+') do
-        if pattern_var[ft] ~= nil and dup_check[ft] == nil then
-          dup_check[ft] = 1
-          patterns:add(pattern_var[ft])
-        end
-      end
     end
   end
 
@@ -238,9 +198,9 @@ EOF
   return join(keyword_patterns, '\m\|')
 endfunction"}}}
 
-function! neocomplete#helper#ftdictionary2list(dictionary, filetype) "{{{
-  return map(filter(neocomplete#get_source_filetypes(a:filetype),
-        \ 'has_key(a:dictionary, v:val)'), 'a:dictionary[v:val]')
+function! neocomplete#helper#check_filetype(dictionary) "{{{
+  return !empty(filter(neocomplete#context_filetype#filetypes(),
+        \ 'get(a:dictionary, v:val, 0)'))
 endfunction"}}}
 
 function! neocomplete#helper#get_sources_list(...) "{{{
@@ -273,9 +233,8 @@ function! neocomplete#helper#get_sources_list(...) "{{{
 
   let neocomplete = neocomplete#get_current_neocomplete()
   let neocomplete.sources = filter(sources, "
-        \   (empty(v:val.filetypes) ||
-        \    !empty(neocomplete#helper#ftdictionary2list(
-        \      v:val.filetypes, neocomplete.context_filetype)))")
+        \   empty(v:val.filetypes) ||
+        \   neocomplete#helper#check_filetype(v:val.filetypes)")
   let neocomplete.sources_filetype = neocomplete.context_filetype
 
   return neocomplete.sources
@@ -294,12 +253,6 @@ function! neocomplete#helper#clear_result() "{{{
     " Restore completeopt.
     let &completeopt = neocomplete.completeopt
   endif
-
-  " Clear context.
-  for source in values(neocomplete#variables#get_sources())
-    let source.neocomplete__context = neocomplete#init#_context(
-          \ source.neocomplete__context)
-  endfor
 endfunction"}}}
 
 function! neocomplete#helper#call_hook(sources, hook_name, context) "{{{
@@ -314,9 +267,9 @@ function! neocomplete#helper#call_hook(sources, hook_name, context) "{{{
       call neocomplete#print_error(v:throwpoint)
       call neocomplete#print_error(v:exception)
       call neocomplete#print_error(
-            \ '[unite.vim] Error occurred in calling hook "' . a:hook_name . '"!')
+            \ 'Error occurred in calling hook "' . a:hook_name . '"!')
       call neocomplete#print_error(
-            \ '[unite.vim] Source name is ' . source.name)
+            \ 'Source name is ' . source.name)
     endtry
   endfor
 endfunction"}}}
@@ -330,10 +283,10 @@ function! neocomplete#helper#call_filters(filters, source, context) "{{{
       call neocomplete#print_error(v:throwpoint)
       call neocomplete#print_error(v:exception)
       call neocomplete#print_error(
-            \ '[unite.vim] Error occurred in calling filter '
+            \ 'Error occurred in calling filter '
             \   . filter.name . '!')
       call neocomplete#print_error(
-            \ '[unite.vim] Source name is ' . a:source.name)
+            \ 'Source name is ' . a:source.name)
     endtry
   endfor
 
@@ -377,8 +330,6 @@ function! neocomplete#helper#indent_current_line() "{{{
 endfunction"}}}
 
 function! neocomplete#helper#complete_configure() "{{{
-  call s:save_foldinfo()
-
   set completeopt-=menu
   set completeopt-=longest
   set completeopt+=menuone
@@ -388,32 +339,25 @@ function! neocomplete#helper#complete_configure() "{{{
   let neocomplete.completeopt = &completeopt
 
   if neocomplete#util#is_complete_select()
+        \ && &completeopt !~# 'noinsert\|noselect'
     if g:neocomplete#enable_auto_select
       set completeopt-=noselect
       set completeopt+=noinsert
     else
-      set completeopt+=noinsert,noselect
+      set completeopt-=noinsert
+      set completeopt+=noselect
     endif
   endif
 endfunction"}}}
 
-function! s:save_foldinfo() "{{{
-  " Save foldinfo.
-  let winnrs = filter(range(1, winnr('$')),
-        \ "winbufnr(v:val) == bufnr('%')")
-
-  " Note: for foldmethod=expr or syntax.
-  call filter(winnrs, "
-        \  (getwinvar(v:val, '&foldmethod') ==# 'expr' ||
-        \   getwinvar(v:val, '&foldmethod') ==# 'syntax') &&
-        \  getwinvar(v:val, '&modifiable')")
-  for winnr in winnrs
-    call setwinvar(winnr, 'neocomplete_foldinfo', {
-          \ 'foldmethod' : getwinvar(winnr, '&foldmethod'),
-          \ 'foldexpr'   : getwinvar(winnr, '&foldexpr')
-          \ })
-    call setwinvar(winnr, '&foldmethod', 'manual')
-    call setwinvar(winnr, '&foldexpr', 0)
+function! neocomplete#helper#clean(directory) "{{{
+  let directory = neocomplete#get_data_directory() .'/'.a:directory
+  for file in split(glob(directory . '/*'), '\n')
+    let orig = substitute(substitute(fnamemodify(file, ':t'),
+        \             '=-', ':', 'g'), '=+', '/', 'g')
+    if !filereadable(orig)
+      call delete(file)
+    endif
   endfor
 endfunction"}}}
 

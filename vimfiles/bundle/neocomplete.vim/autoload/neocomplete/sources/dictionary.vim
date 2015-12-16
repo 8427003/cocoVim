@@ -50,8 +50,10 @@ let s:source = {
       \}
 
 function! s:source.hooks.on_init(context) "{{{
-  " Set make cache event.
-  autocmd neocomplete FileType * call s:make_cache(&l:filetype)
+  augroup neocomplete "{{{
+    autocmd FileType * call s:make_cache(&l:filetype)
+    autocmd VimLeavePre * call neocomplete#helper#clean('dictionary_cache')
+  augroup END"}}}
 
   " Create cache directory.
   call neocomplete#cache#make_directory('dictionary_cache')
@@ -67,8 +69,7 @@ endfunction"}}}
 function! s:source.gather_candidates(context) "{{{
   let list = []
 
-  for ft in neocomplete#get_source_filetypes(
-        \ neocomplete#get_context_filetype())
+  for ft in a:context.filetypes
     if !has_key(s:dictionary_cache, ft)
       call s:make_cache(ft)
     endif

@@ -59,6 +59,7 @@ function! s:source.hooks.on_init(context) "{{{
           \ call s:check_source()
     autocmd InsertEnter,InsertLeave *
           \ call neocomplete#sources#buffer#make_cache_current_line()
+    autocmd VimLeavePre * call s:clean()
   augroup END"}}}
 
   " Create cache directory.
@@ -79,11 +80,6 @@ function! s:source.hooks.on_final(context) "{{{
   silent! delcommand NeoCompleteBufferMakeCache
 
   let s:buffer_sources = {}
-
-  " Remove temporary files
-  call map(glob(printf('%s/%d_*',
-        \ neocomplete#get_data_directory() . '/buffer_temp',
-        \ getpid()), 1, 1), 'delete(v:val)')
 endfunction"}}}
 
 function! s:source.hooks.on_post_filter(context) "{{{
@@ -93,10 +89,10 @@ function! s:source.hooks.on_post_filter(context) "{{{
 endfunction"}}}
 
 function! s:source.gather_candidates(context) "{{{
-  call s:check_async_cache()
+  call s:check_async_cache(a:context)
 
   let keyword_list = []
-  for source in s:get_sources_list()
+  for source in s:get_sources_list(a:context)
     let keyword_list += source.words
   endfor
   return keyword_list
@@ -117,8 +113,8 @@ function! neocomplete#sources#buffer#make_cache_current_line() "{{{
 
   " let start = reltime()
   call s:make_cache_current_buffer(
-        \ max([1, line('.')-10]),
-        \ min([line('$'), line('.') + 10]))
+        \ max([1, line('.') - winline()]),
+        \ min([line('$'), line('.') + winheight(0) - winline()]))
   " echomsg reltimestr(reltime(start))
 endfunction"}}}
 
@@ -131,10 +127,9 @@ function! s:should_create_cache(bufnr) " {{{
         \  || filepath !~# g:neocomplete#sources#buffer#disabled_pattern)
 endfunction"}}}
 
-function! s:get_sources_list() "{{{
+function! s:get_sources_list(context) "{{{
   let filetypes_dict = {}
-  for filetype in neocomplete#get_source_filetypes(
-        \ neocomplete#get_context_filetype())
+  for filetype in a:context.filetypes
     let filetypes_dict[filetype] = 1
   endfor
 
@@ -173,7 +168,9 @@ endfunction"}}}
 
 function! s:make_cache_file(srcname) "{{{
   " Initialize source.
-  call s:initialize_source(a:srcname)
+  if !has_key(s:buffer_sources, a:srcname)
+    call s:initialize_source(a:srcname)
+  endif
 
   let source = s:buffer_sources[a:srcname]
 
@@ -266,8 +263,6 @@ function! s:check_source() "{{{
         \ && s:should_create_cache(v:val)
         \ "), 's:make_cache_file(v:val)')
 
-  call s:check_async_cache()
-
   " Remove unlisted buffers.
   call filter(s:buffer_sources,
         \ "v:key == bufnr('%') || buflisted(str2nr(v:key))")
@@ -329,8 +324,8 @@ EOF
   let source.words = neocomplete#util#uniq(source.words + words)
 endfunction"}}}
 
-function! s:check_async_cache() "{{{
-  for source in s:get_sources_list()
+function! s:check_async_cache(context) "{{{
+  for source in s:get_sources_list(a:context)
     if !has_key(s:async_dictionary_list, source.path)
       continue
     endif
@@ -346,6 +341,14 @@ function! s:check_async_cache() "{{{
       call remove(s:async_dictionary_list, source.path)
     endif
   endfor
+endfunction"}}}
+
+function! s:clean() abort "{{{
+  call neocomplete#helper#clean('buffer_cache')
+  " Remove temporary files
+  call map(glob(printf('%s/%d_*',
+        \ neocomplete#get_data_directory() . '/buffer_temp',
+        \ getpid()), 1, 1), 'delete(v:val)')
 endfunction"}}}
 
 " Command functions. "{{{

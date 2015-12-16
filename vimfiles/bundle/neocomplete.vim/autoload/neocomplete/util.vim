@@ -103,7 +103,7 @@ function! neocomplete#util#is_mac(...) "{{{
   return call(s:get_prelude().is_mac, a:000)
 endfunction"}}}
 function! neocomplete#util#is_complete_select() "{{{
-  return get(g:, 'neocomplete#enable_complete_select', 0)
+  return has('patch-7.4.775')
 endfunction"}}}
 function! neocomplete#util#get_last_status(...) "{{{
   return call(s:get_process().get_last_status, a:000)
@@ -251,6 +251,11 @@ endfunction"}}}
 
 function! neocomplete#util#convert2list(expr) "{{{
   return type(a:expr) ==# type([]) ? a:expr : [a:expr]
+endfunction"}}}
+
+function! neocomplete#util#is_text_changed() "{{{
+  " Note: Vim 7.4.143 fixed TextChangedI bug.
+  return v:version > 704 || v:version == 704 && has('patch143')
 endfunction"}}}
 
 let &cpo = s:save_cpo

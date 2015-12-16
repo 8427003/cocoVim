@@ -31,14 +31,26 @@ function! neocomplete#mappings#define_default_mappings() "{{{
         \ unite#sources#neocomplete#start_complete()
   inoremap <expr><silent> <Plug>(neocomplete_start_unite_quick_match)
         \ unite#sources#neocomplete#start_quick_match()
-  inoremap <silent> <Plug>(neocomplete_start_omni_complete)
-        \ <C-x><C-o><C-p>
-  inoremap <silent> <Plug>(neocomplete_start_auto_complete)
-        \ <C-r>=neocomplete#mappings#auto_complete()<CR><C-r>=
-        \neocomplete#mappings#popup_post()<CR>
-  inoremap <silent> <Plug>(neocomplete_start_manual_complete)
-        \ <C-r>=neocomplete#mappings#manual_complete()<CR><C-r>=
-        \neocomplete#mappings#popup_post()<CR>
+  if neocomplete#util#is_complete_select()
+    inoremap <silent> <Plug>(neocomplete_start_omni_complete)
+          \ <C-x><C-o>
+  else
+    inoremap <silent> <Plug>(neocomplete_start_omni_complete)
+          \ <C-x><C-o><C-p>
+  endif
+  if neocomplete#util#is_complete_select()
+    inoremap <silent> <Plug>(neocomplete_start_auto_complete)
+          \ <C-r>=neocomplete#mappings#auto_complete()<CR>
+    inoremap <silent> <Plug>(neocomplete_start_manual_complete)
+          \ <C-r>=neocomplete#mappings#manual_complete()<CR>
+  else
+    inoremap <silent> <Plug>(neocomplete_start_auto_complete)
+          \ <C-r>=neocomplete#mappings#auto_complete()<CR><C-r>=
+          \neocomplete#mappings#popup_post()<CR>
+    inoremap <silent> <Plug>(neocomplete_start_manual_complete)
+          \ <C-r>=neocomplete#mappings#manual_complete()<CR><C-r>=
+          \neocomplete#mappings#popup_post()<CR>
+  endif
 
   if !has('patch-7.4.653')
     " To prevent Vim's complete() bug.
@@ -62,6 +74,9 @@ function! neocomplete#mappings#auto_complete() "{{{
   let neocomplete.candidates = neocomplete#complete#_get_words(
         \ neocomplete.complete_sources, complete_pos, base)
   let neocomplete.complete_str = base
+  if empty(neocomplete.candidates)
+    return ''
+  endif
 
   " Start auto complete.
   call complete(complete_pos+1, neocomplete.candidates)
@@ -82,6 +97,9 @@ function! neocomplete#mappings#manual_complete() "{{{
   let neocomplete.candidates = neocomplete#complete#_get_words(
         \ complete_sources, complete_pos, base)
   let neocomplete.complete_str = base
+  if empty(neocomplete.candidates)
+    return ''
+  endif
 
   " Start auto complete.
   call complete(complete_pos+1, neocomplete.candidates)
@@ -95,7 +113,8 @@ endfunction
 function! neocomplete#mappings#close_popup() "{{{
   let neocomplete = neocomplete#get_current_neocomplete()
   let neocomplete.complete_str = ''
-  let neocomplete.skip_next_complete = 2
+  let neocomplete.old_cur_text = neocomplete#get_cur_text(1)
+  let neocomplete.skip_next_complete = 1
 
   return pumvisible() ? "\<C-y>" : ''
 endfunction
@@ -103,6 +122,7 @@ endfunction
 function! neocomplete#mappings#cancel_popup() "{{{
   let neocomplete = neocomplete#get_current_neocomplete()
   let neocomplete.complete_str = ''
+  let neocomplete.old_cur_text = neocomplete#get_cur_text(1)
   let neocomplete.skip_next_complete = 1
 
   return pumvisible() ? "\<C-e>" : ''
@@ -142,7 +162,6 @@ function! neocomplete#mappings#complete_common_string() "{{{
   let neocomplete.event = 'mapping'
   let complete_str =
         \ neocomplete#helper#match_word(neocomplete#get_cur_text(1))[1]
-  let neocomplete.event = ''
 
   if complete_str == ''
     return ''
@@ -196,9 +215,10 @@ endfunction"}}}
 
 function! neocomplete#mappings#fallback(i) "{{{
   let mapping = g:neocomplete#fallback_mappings[a:i]
-  return  (pumvisible()
-        \ || (mapping ==? "\<C-x>\<C-o>" && &l:omnifunc == '')) ? "" :
-        \   mapping . "\<C-p>"
+  return  (pumvisible() || (mapping ==? "\<C-x>\<C-o>"
+        \                   && &l:omnifunc == '')) ? "" :
+        \ (mapping . (neocomplete#util#is_complete_select() ?
+        \             "" : "\<C-p>"))
 endfunction"}}}
 
 " Manual complete wrapper.
@@ -226,8 +246,9 @@ function! neocomplete#mappings#start_manual_complete(...) "{{{
   call neocomplete#helper#complete_configure()
 
   " Start complete.
-  return "\<C-r>=neocomplete#mappings#manual_complete()
-        \\<CR>\<C-r>=neocomplete#mappings#popup_post()\<CR>"
+  return "\<C-r>=neocomplete#mappings#manual_complete()\<CR>"
+        \ . (neocomplete#util#is_complete_select() ?
+        \    "" : "\<C-r>=neocomplete#mappings#popup_post()\<CR>")
 endfunction"}}}
 
 let &cpo = s:save_cpo

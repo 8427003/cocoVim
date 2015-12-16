@@ -48,7 +48,7 @@ function! s:source.hooks.on_init(context) "{{{
   call neocomplete#util#set_default_dictionary(
         \'g:neocomplete#sources#omni#input_patterns',
         \'html,xhtml,xml,markdown,mkd',
-        \'<[^>]*')
+        \'<\|\s[[:alnum:]-]*')
   call neocomplete#util#set_default_dictionary(
         \'g:neocomplete#sources#omni#input_patterns',
         \'css,scss,sass',
@@ -97,6 +97,10 @@ function! s:source.hooks.on_init(context) "{{{
         \'g:neocomplete#sources#omni#input_patterns',
         \'clojure',
         \'\%(([^)]\+\)\|\*[[:alnum:]_-]\+')
+  call neocomplete#util#set_default_dictionary(
+        \'g:neocomplete#sources#omni#input_patterns',
+        \'rust',
+        \'[^.[:digit:] *\t]\%(\.\|\::\)\%(\h\w*\)\?')
 
   " External language interface check.
   if has('ruby')
@@ -113,10 +117,9 @@ function! s:source.hooks.on_init(context) "{{{
 endfunction"}}}
 
 function! s:source.get_complete_position(context) "{{{
-  let filetype = neocomplete#get_context_filetype()
   let a:context.source__complete_results =
         \ s:set_complete_results_pos(
-        \   s:get_omni_funcs(filetype), a:context.input)
+        \   s:get_omni_funcs(a:context.filetype), a:context.input)
 
   return s:get_complete_pos(a:context.source__complete_results)
 endfunction"}}}
@@ -231,7 +234,6 @@ function! s:set_complete_results_words(complete_results) "{{{
     let pos = getpos('.')
 
     try
-      call cursor(0, result.complete_pos)
       let ret = call(omnifunc, [0, result.complete_str])
       let list = type(ret) == type([]) ? ret : ret.words
     catch

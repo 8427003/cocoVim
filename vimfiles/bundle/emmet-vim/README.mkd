@@ -6,6 +6,8 @@ which provides support for expanding abbreviations similar to
 
 [![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/mattn/emmet-vim/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
 
+![](https://raw.githubusercontent.com/mattn/emmet-vim/master/doc/screenshot.gif)
+
 ## Installation
 
 [Download zip file](http://www.vim.org/scripts/script.php?script_id=2981):
@@ -106,13 +108,6 @@ You can change the **path** to your **snippets_custom.json** according to your p
 ## Project Authors
 
 [Yasuhiro Matsumoto](http://mattn.kaoriya.net/)
-
-## Donating
-
-[![Support via Gittip][gittip-badge]][gittip]
-
-[gittip-badge]: https://rawgithub.com/twolfson/gittip-badge/master/dist/gittip.png
-[gittip]: https://www.gittip.com/mattn/
 
 ## Links
 

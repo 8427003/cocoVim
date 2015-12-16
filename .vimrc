@@ -206,9 +206,9 @@ if has('gui_running')
             set guifont=*-lucidatypewriter-medium-r-normal-*-*-180-*-*-m-*-*
         elseif OSX()
             if getfontname( 'DejaVu Sans Mono for Powerline' ) != ''
-                set guifont=DejaVu\ Sans\ Mono\ for\ Powerline:h15
+                set guifont=DejaVu\ Sans\ Mono\ for\ Powerline:h16
             elseif getfontname( 'DejaVu Sans Mono' ) != ''
-                set guifont=DejaVu\ Sans\ Mono:h15
+                set guifont=DejaVu\ Sans\ Mono:h16
             endif
         elseif WINDOWS()
             if getfontname( 'DejaVu Sans Mono for Powerline' ) != ''
