@@ -36,17 +36,10 @@ endf
 "
 " a, c, d -- see :h command-completion-custom
 " return  -- all valid plugin names from vim-scripts.org as completion
-"            candidates, or all installed plugin names when running an 'Update
-"            variant'. see also :h command-completion-custom
+"            candidates, see also :h command-completion-custom
 " ---------------------------------------------------------------------------
 func! vundle#scripts#complete(a,c,d)
-  if match(a:c, '\v^%(Plugin|Vundle)%(Install!|Update)') == 0
-    " Only installed plugins if updating
-    return join(map(copy(g:vundle#bundles), 'v:val.name'), "\n")
-  else
-    " Or all known plugins otherwise
-    return join(s:load_scripts(0),"\n")
-  endif
+  return join(s:load_scripts(0),"\n")
 endf
 
 
@@ -54,19 +47,12 @@ endf
 " View the logfile after an update or installation.
 " ---------------------------------------------------------------------------
 func! s:view_log()
-  if !exists('s:log_file')
-    let s:log_file = tempname()
+  if !exists('g:vundle_log_file')
+    let g:vundle_log_file = tempname()
   endif
 
-  if bufloaded(s:log_file)
-    execute 'silent bdelete' s:log_file
-  endif
-  call writefile(g:vundle#log, s:log_file)
-  execute 'silent pedit ' . s:log_file
-  set bufhidden=wipe
-  setl buftype=nofile
-  setl noswapfile
-  setl ro noma
+  call writefile(g:vundle_log, g:vundle_log_file)
+  execute 'silent pedit ' . g:vundle_log_file
 
   wincmd P | wincmd H
 endf
@@ -77,8 +63,7 @@ endf
 " user.
 " ---------------------------------------------------------------------------
 func! s:create_changelog() abort
-  let changelog = ['Updated Plugins:']
-  for bundle_data in g:vundle#updated_bundles
+  for bundle_data in g:updated_bundles
     let initial_sha = bundle_data[0]
     let updated_sha = bundle_data[1]
     let bundle      = bundle_data[2]
@@ -91,19 +76,18 @@ func! s:create_changelog() abort
 
     let updates = system(cmd)
 
-    call add(changelog, '')
-    call add(changelog, 'Updated Plugin: '.bundle.name)
+    call add(g:vundle_changelog, '')
+    call add(g:vundle_changelog, 'Updated Plugin: '.bundle.name)
 
     if bundle.uri =~ "https://github.com"
-      call add(changelog, 'Compare at: '.bundle.uri[0:-5].'/compare/'.initial_sha.'...'.updated_sha)
+      call add(g:vundle_changelog, 'Compare at: '.bundle.uri[0:-5].'/compare/'.initial_sha.'...'.updated_sha)
     endif
 
     for update in split(updates, '\n')
       let update = substitute(update, '\s\+$', '', '')
-      call add(changelog, '  '.update)
+      call add(g:vundle_changelog, '  '.update)
     endfor
   endfor
-  return changelog
 endf
 
 
@@ -111,20 +95,14 @@ endf
 " View the change log after an update or installation.
 " ---------------------------------------------------------------------------
 func! s:view_changelog()
-  if !exists('s:changelog_file')
-    let s:changelog_file = tempname()
+  call s:create_changelog()
+
+  if !exists('g:vundle_changelog_file')
+    let g:vundle_changelog_file = tempname()
   endif
 
-  if bufloaded(s:changelog_file)
-    execute 'silent bdelete' s:changelog_file
-  endif
-  call writefile(s:create_changelog(), s:changelog_file)
-  execute 'silent pedit' s:changelog_file
-  set bufhidden=wipe
-  setl buftype=nofile
-  setl noswapfile
-  setl ro noma
-  setfiletype vundlelog
+  call writefile(g:vundle_changelog, g:vundle_changelog_file)
+  execute 'silent pedit ' . g:vundle_changelog_file
 
   wincmd P | wincmd H
 endf
@@ -151,15 +129,15 @@ endf
 "            strings)
 " ---------------------------------------------------------------------------
 func! vundle#scripts#view(title, headers, results)
-  if exists('s:view') && bufloaded(s:view)
-    exec s:view.'bd!'
+  if exists('g:vundle_view') && bufloaded(g:vundle_view)
+    exec g:vundle_view.'bd!'
   endif
 
   exec 'silent pedit [Vundle] '.a:title
 
   wincmd P | wincmd H
 
-  let s:view = bufnr('%')
+  let g:vundle_view = bufnr('%')
   "
   " make buffer modifiable
   " to append without errors
@@ -169,7 +147,6 @@ func! vundle#scripts#view(title, headers, results)
 
   setl buftype=nofile
   setl noswapfile
-  set bufhidden=wipe
 
   setl cursorline
   setl nonu ro noma
@@ -197,25 +174,25 @@ func! vundle#scripts#view(title, headers, results)
 
   com! -buffer -nargs=0 VundleChangelog call s:view_changelog()
 
-  nnoremap <silent> <buffer> q :silent bd!<CR>
-  nnoremap <silent> <buffer> D :exec 'Delete'.getline('.')<CR>
+  nnoremap <buffer> q :silent bd!<CR>
+  nnoremap <buffer> D :exec 'Delete'.getline('.')<CR>
 
-  nnoremap <silent> <buffer> add  :exec 'Install'.getline('.')<CR>
-  nnoremap <silent> <buffer> add! :exec 'Install'.substitute(getline('.'), '^Plugin ', 'Plugin! ', '')<CR>
+  nnoremap <buffer> add  :exec 'Install'.getline('.')<CR>
+  nnoremap <buffer> add! :exec 'Install'.substitute(getline('.'), '^Plugin ', 'Plugin! ', '')<CR>
 
-  nnoremap <silent> <buffer> i :exec 'InstallAndRequire'.getline('.')<CR>
-  nnoremap <silent> <buffer> I :exec 'InstallAndRequire'.substitute(getline('.'), '^Plugin ', 'Plugin! ', '')<CR>
+  nnoremap <buffer> i :exec 'InstallAndRequire'.getline('.')<CR>
+  nnoremap <buffer> I :exec 'InstallAndRequire'.substitute(getline('.'), '^Plugin ', 'Plugin! ', '')<CR>
 
-  nnoremap <silent> <buffer> l :VundleLog<CR>
-  nnoremap <silent> <buffer> u :VundleChangelog<CR>
-  nnoremap <silent> <buffer> h :h vundle<CR>
-  nnoremap <silent> <buffer> ? :h vundle<CR>
+  nnoremap <buffer> l :VundleLog<CR>
+  nnoremap <buffer> u :VundleChangelog<CR>
+  nnoremap <buffer> h :h vundle<CR>
+  nnoremap <buffer> ? :norm h<CR>
 
-  nnoremap <silent> <buffer> c :PluginClean<CR>
-  nnoremap <silent> <buffer> C :PluginClean!<CR>
+  nnoremap <buffer> c :PluginClean<CR>
+  nnoremap <buffer> C :PluginClean!<CR>
 
   nnoremap <buffer> s :PluginSearch
-  nnoremap <silent> <buffer> R :call vundle#scripts#reload()<CR>
+  nnoremap <buffer> R :call vundle#scripts#reload()<CR>
 
   " goto first line after headers
   exec ':'.(len(a:headers) + 1)
@@ -268,7 +245,7 @@ endf
 "           specifications) of all plugins from vim-scripts.org
 " ---------------------------------------------------------------------------
 func! s:load_scripts(bang)
-  let f = expand(g:vundle#bundle_dir.'/.vundle/script-names.vim-scripts.org.json', 1)
+  let f = expand(g:bundle_dir.'/.vundle/script-names.vim-scripts.org.json', 1)
   if a:bang || !filereadable(f)
     if 0 != s:fetch_scripts(f)
       return []
