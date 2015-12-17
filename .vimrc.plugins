@@ -77,12 +77,12 @@ nmap <F3> :NERDTreeToggle<CR>
 " vim-easymotion: invoke by <leader><leader> w,b,e,ge,f,F,h,i,j,k,/
 Plugin 'Lokaltog/vim-easymotion'
 map ff <Plug>(easymotion-sn)
-map <leader><leader>/ <Plug>(easymotion-sn)
-omap <leader><leader>/ <Plug>(easymotion-tn)
-map <leader><leader>j <Plug>(easymotion-j)
-map <leader><leader>k <Plug>(easymotion-k)
-map <leader><leader>l <Plug>(easymotion-lineforward)
-map <leader><leader>h <Plug>(easymotion-linebackward)
+map <leader>/ <Plug>(easymotion-sn)
+omap <leader>/ <Plug>(easymotion-tn)
+map <leader>j <Plug>(easymotion-j)
+map <leader>k <Plug>(easymotion-k)
+map <leader>l <Plug>(easymotion-lineforward)
+map <leader>h <Plug>(easymotion-linebackward)
 let g:EasyMotion_startofline = 0 " keep cursor colum when JK motion
 
 
@@ -293,7 +293,7 @@ let g:syntastic_javascript_checkers = ['fecs']
 let g:syntastic_javascript_fecs_args = "--reporter=baidu"
 let g:syntastic_error_symbol = "✗"
 let g:syntastic_warning_symbol = "⚠"
-vnoremap <unique><silent><leader>l :call FecsFormat()<CR>
+" vnoremap <unique><silent><leader>l :call FecsFormat()<CR>
 
 " ---------------------------------------------------
 Plugin 'terryma/vim-expand-region'
@@ -345,7 +345,6 @@ vmap <silent> <expr> p <sid>Repl()
 " ---------------------------------------------------
 "my setting
 ":set cursorline
-":set autochdir "自动设当前编辑的文件所在目录为当前工作路径
 ":lcd %:p:h  "自动更改到当前文件所在的目录
 colorscheme molokai
 
@@ -365,5 +364,8 @@ else
     :cd ~/git
 endif
 
+:set wildmode=list ":tabe 能显示目录树
+:set linespace=2 "行间距
+:set autochdir "自动设当前编辑的文件所在目录为当前工作路径
 " ---------------------------------------------------
 " vim:ts=4:sw=4:sts=4 et fdm=marker:

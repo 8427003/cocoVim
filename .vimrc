@@ -177,11 +177,6 @@ set nu " show line number
 set scrolloff=0 " minimal number of screen lines to keep above and below the cursor
 set nowrap " do not wrap text
 
-" only supoort in 7.3 or higher
-if v:version >= 703
-    set noacd " no autochchdir
-endif
-
 " set default guifont
 if has('gui_running')
     augroup ex_gui_font
@@ -206,9 +201,9 @@ if has('gui_running')
             set guifont=*-lucidatypewriter-medium-r-normal-*-*-180-*-*-m-*-*
         elseif OSX()
             if getfontname( 'DejaVu Sans Mono for Powerline' ) != ''
-                set guifont=DejaVu\ Sans\ Mono\ for\ Powerline:h16
+                set guifont=DejaVu\ Sans\ Mono\ for\ Powerline:h15
             elseif getfontname( 'DejaVu Sans Mono' ) != ''
-                set guifont=DejaVu\ Sans\ Mono:h16
+                set guifont=DejaVu\ Sans\ Mono:h15
             endif
         elseif WINDOWS()
             if getfontname( 'DejaVu Sans Mono for Powerline' ) != ''
@@ -294,6 +289,7 @@ endfunction
 
 set cindent shiftwidth=4 " set cindent on to autoinent when editing c/c++ file, with 4 shift width
 set tabstop=4 " set tabstop to 4 characters
+set softtabstop=4
 set expandtab " set expandtab on, the tab will be change to space automaticaly
 set ve=block " in visual block mode, cursor can be positioned where there is no actual character
 
