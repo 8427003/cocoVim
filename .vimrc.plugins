@@ -68,7 +68,7 @@ let g:NERDTreeMouseMode = 1
 let g:NERDTreeMapToggleZoom = '<Space>'
 let g:NERDTreeMinimalUI=1 "不显示帮助面板
 let g:NERDTreeDirArrows=1 "目录箭头 1 显示箭头  0传统+-|号
-autocmd vimenter * NERDTree "自动以当前目录打开tree
+"autocmd vimenter * NERDTree "自动以当前目录打开tree
 nmap nf :NERDTreeFind<CR>"锁定文件对应目录树位置
 nmap <F3> :NERDTreeToggle<CR>
 
@@ -356,12 +356,12 @@ function! OpenBash()
 endfunction
 
 if WINDOWS()
-    :cd C:\Users\cocoo.li\Desktop\git
+    ":cd C:\Users\cocoo.li\Desktop\git
 elseif OSX()
-    :cd ~/svn
-    nmap <Leader><Leader><Leader> :call OpenBash()<CR>
+    ":cd ~/svn
+    "nmap <Leader><Leader><Leader> :call OpenBash()<CR>
 else
-    :cd ~/git
+    ":cd ~/git
 endif
 
 :set wildmode=list ":tabe 能显示目录树
