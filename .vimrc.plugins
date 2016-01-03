@@ -116,41 +116,6 @@ Plugin '8427003/vim-colorschemes'
 Plugin 'tpope/vim-surround'
 xmap s <Plug>VSurround
 
-
-" ---------------------------------------------------
-" generate doc comment template
-nmap tt :call GenerateDOCComment()<CR>
-
-function! GenerateDOCComment()
-  let l    = line('.')
-  let i    = indent(l)
-  let pre  = repeat(' ',i)
-  let text = getline(l)
-  let params   = matchstr(text,'([^)]*)')
-  let paramPat = '\([$a-zA-Z_0-9]\+\)[, ]*\(.*\)'
-  echomsg params
-  let vars = []
-  let m    = ' '
-  let ml = matchlist(params,paramPat)
-  while ml!=[]
-    let [_,var;rest]= ml
-    let vars += [pre.' * @param  {type} '.var]
-    let ml = matchlist(rest,paramPat,0)
-  endwhile
-  let vars += [pre.' * @return {type} ']
-  let comment = [pre.'/**',pre.' * '] + vars + [pre.' */']
-  call append(l-1,comment)
-  call cursor(l+1,i+3)
-endfunction
-
-let g:NERDSpaceDelims = 1
-let g:NERDRemoveExtraSpaces = 1
-let g:NERDCustomDelimiters = {
-            \ 'vimentry': { 'left': '--' },
-            \ }
-map <unique> <F11> <Plug>NERDCommenterAlignBoth
-map <unique> <C-F11> <Plug>NERDCommenterUncomment
-
 " ---------------------------------------------------
 " undotree: invoke by <Leader>u
 Plugin 'mbbill/undotree'
@@ -184,7 +149,7 @@ vmap <Leader>: :Tabularize /:<CR>
 " ---------------------------------------------------
 " LargeFile
 Plugin 'vim-scripts/LargeFile'
-let g:LargeFile= 5 " files >= 5MB will use LargeFile rules
+let g:LargeFile= 2 " files >= 2MB will use LargeFile rules
 
 " ---------------------------------------------------
 Plugin 'ntpeters/vim-better-whitespace'
@@ -196,7 +161,7 @@ Plugin 'mattn/emmet-vim'
 " make sure emmet only enable in html,css files
 let g:user_emmet_install_global = 0
 autocmd FileType html,css EmmetInstall
-let g:user_emmet_leader_key='<Leader>'
+let g:user_emmet_leader_key='<c>'
 
 " ---------------------------------------------------
 Plugin 'Yggdroot/indentLine'
@@ -231,14 +196,6 @@ let g:vim_markdown_initial_foldlevel=9999
 " ---------------------------------------------------
 Plugin 'roman/golden-ratio'
 
-" ---------------------------------------------------
-"打开文件目录
-function! OpenWithExplorer()
-    "let currentPath = expand("%:p:h")
-    let currentFile = expand("%:p")
-    call system("open".currentFile)
-endfunction
-command! -nargs=0 Ep call OpenWithExplorer()
 
 
 " ---------------------------------------------------
@@ -253,6 +210,10 @@ Plugin 'Raimondi/delimitMate' "() {} 括号匹配 is ok
 let delimitMate_expand_cr = 1 "let -R indent
 au FileType mail let b:delimitMate_expand_cr = 1
 "inoremap <expr> <Tab> <C-Tab>
+
+" ---------------------------------------------------
+Plugin 'heavenshell/vim-jsdoc' " 函数注释
+nmap <silent> tt <Plug>(jsdoc)
 
 " ---------------------------------------------------
 Plugin 'hushicai/fecs.vim.git'
@@ -314,31 +275,23 @@ function! s:Repl()
 endfunction
 vmap <silent> <expr> p <sid>Repl()
 
+" ---------------------------------------------------
+"打开文件目录
+function! OpenWithExplorer()
+    "let currentPath = expand("%:p:h")
+    let currentFile = expand("%:p")
+    call system("open".currentFile)
+endfunction
+command! -nargs=0 Ep call OpenWithExplorer()
 
 " ---------------------------------------------------
 "my setting
-":set cursorline
-":lcd %:p:h  "自动更改到当前文件所在的目录
+
 colorscheme molokai
-
-" ---------------------------------------------------
-function! OpenBash()
-    let path = expand("%:p:h")
-    let my_terminal = conque_term#open('bash')
-    call conque_term#get_instance().writeln("cd ".path)
-endfunction
-
-if WINDOWS()
-    ":cd C:\Users\cocoo.li\Desktop\git
-elseif OSX()
-    ":cd ~/svn
-    "nmap <Leader><Leader><Leader> :call OpenBash()<CR>
-else
-    ":cd ~/git
-endif
 
 :set wildmode=list ":tabe 能显示目录树
 :set linespace=2 "行间距
 :set autochdir "自动设当前编辑的文件所在目录为当前工作路径
+
 " ---------------------------------------------------
 " vim:ts=4:sw=4:sts=4 et fdm=marker:
