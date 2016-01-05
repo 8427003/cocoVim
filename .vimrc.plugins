@@ -139,11 +139,11 @@ endfunction
 
 " ---------------------------------------------------
 " tabular: invoke by <leader>= alignment-character
-Plugin 'godlygeek/tabular'
-nmap <Leader>= :Tabularize /=<CR>
-vmap <Leader>= :Tabularize /=<CR>
-nmap <Leader>: :Tabularize /:<CR>
-vmap <Leader>: :Tabularize /:<CR>
+" Plugin 'godlygeek/tabular'
+" nmap <Leader>= :Tabularize /=<CR>
+" vmap <Leader>= :Tabularize /=<CR>
+" nmap <Leader>: :Tabularize /:<CR>
+" vmap <Leader>: :Tabularize /:<CR>
 
 
 " ---------------------------------------------------
