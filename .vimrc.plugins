@@ -292,6 +292,9 @@ colorscheme molokai
 :set wildmode=list ":tabe 能显示目录树
 :set linespace=2 "行间距
 :set autochdir "自动设当前编辑的文件所在目录为当前工作路径
+ 
+vnoremap <leader>w <c-w>w
+nnoremap <leader>w <c-w>w
 
 " ---------------------------------------------------
 " vim:ts=4:sw=4:sts=4 et fdm=marker:
