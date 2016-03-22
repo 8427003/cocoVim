@@ -75,19 +75,8 @@ map <leader>l <Plug>(easymotion-lineforward)
 map <leader>h <Plug>(easymotion-linebackward)
 let g:EasyMotion_startofline = 0 " keep cursor colum when JK motion
 
-
 " ---------------------------------------------------
-" neocomplete: invoke when you insert words
-Plugin 'Shougo/neocomplete.vim'
-let g:neocomplete#enable_at_startup = 1
-let g:neocomplete#enable_smart_case = 1
-let g:neocomplete#enable_auto_select = 1 " let neocomplete's completion behavior like AutoComplPop
-" " Enable omni completion.
-autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
-autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
-autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
-autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+Plugin 'Valloric/YouCompleteMe'
 
 " ---------------------------------------------------
 " ex-showmarks: invoke by m... or <leader>mm, <leader>ma
@@ -155,14 +144,6 @@ let g:LargeFile= 2 " files >= 2MB will use LargeFile rules
 Plugin 'ntpeters/vim-better-whitespace'
 nnoremap <unique> <leader>w :StripWhitespace<CR>
 
-" emmet-vim
-" ---------------------------------------------------
-Plugin 'mattn/emmet-vim'
-" make sure emmet only enable in html,css files
-let g:user_emmet_install_global = 0
-autocmd FileType html,css EmmetInstall
-let g:user_emmet_leader_key='<c>'
-
 " ---------------------------------------------------
 Plugin 'Yggdroot/indentLine'
 let g:indentLine_leadingSpaceChar = '.'
@@ -178,17 +159,8 @@ Plugin 'pangloss/vim-javascript'
 Plugin 'exvim/ex-indenthtml.vim'
 
 " ---------------------------------------------------
-" vim-css3-syntax
-Plugin 'hail2u/vim-css3-syntax'
-
-" ---------------------------------------------------
 " vim-less
 Plugin 'groenewege/vim-less'
-
-" ---------------------------------------------------
-" vim-markdown
-Plugin 'plasticboy/vim-markdown'
-let g:vim_markdown_initial_foldlevel=9999
 
 
 
@@ -214,23 +186,6 @@ au FileType mail let b:delimitMate_expand_cr = 1
 " ---------------------------------------------------
 Plugin 'heavenshell/vim-jsdoc' " 函数注释
 nmap <silent> tt <Plug>(jsdoc)
-
-" ---------------------------------------------------
-Plugin 'hushicai/fecs.vim.git'
-" 不建议首次打开文件时进行检查
-let g:syntastic_check_on_open = 0
-" `:wq`时不进行检查，注意这跟`:w`不一样
-let g:syntastic_check_on_wq = 0
-" 如果你想在写文件时不进行检查，需要配置`passive`模式
-" 在`passive`模式下，只有手动调用了`:SyntasticCheck`才会触发检查
-" let g:syntastic_mode_map = {'mode': 'passive'}
-" 你可以配置一个快捷方式，用来快速检查当前文件
-" nmap <silent> <F5> :SyntasticCheck<cr>
-let g:syntastic_javascript_checkers = ['fecs']
-let g:syntastic_javascript_fecs_args = "--reporter=baidu"
-let g:syntastic_error_symbol = "✗"
-let g:syntastic_warning_symbol = "⚠"
-" vnoremap <unique><silent><leader>l :call FecsFormat()<CR>
 
 " ---------------------------------------------------
 Plugin 'terryma/vim-expand-region'
