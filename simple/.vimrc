@@ -172,6 +172,10 @@ let delimitMate_expand_cr = 1 "let -R indent
 au FileType mail let b:delimitMate_expand_cr = 1
 "inoremap <expr> <Tab> <C-Tab>
 
+" ---------------------------------------------------
+" vim-javascript 代码高亮
+Plugin 'pangloss/vim-javascript'
+
 
  " ---------------------------------------------------
  " ex-showmarks: invoke by m... or <leader>mm, <leader>ma
