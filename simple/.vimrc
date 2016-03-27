@@ -167,6 +167,15 @@ Plugin 'Valloric/YouCompleteMe'
 Plugin 'othree/xml.vim' "html closeTag is ok
 
 " ---------------------------------------------------
+" vim-html "xml.vim 合起来用才   行
+Plugin 'exvim/ex-indenthtml.vim'
+
+" ---------------------------------------------------
+"template
+Plugin '8427003/vim-template'
+
+
+" ---------------------------------------------------
 Plugin 'Raimondi/delimitMate' "() {} 括号匹配 is ok
 let delimitMate_expand_cr = 1 "let -R indent
 au FileType mail let b:delimitMate_expand_cr = 1
@@ -218,9 +227,6 @@ Plugin 'mileszs/ack.vim'
 " ---------------------------------------------------
 " ex-colorschemes
 Plugin '8427003/vim-colorschemes'
-
-
-
 
 " ---------------------------------------------------
 "系统粘贴版
