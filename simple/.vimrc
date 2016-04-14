@@ -21,6 +21,11 @@ if has('gui_running')
             set guifont=DejaVu\ Sans\ Mono:h15
         endif
     endfunction
+else
+    " 设置终端的256色
+    set t_Co=256
+    colorscheme torte
+    set background=dark
 endif
 
 " ------------------------------------------------------------------
@@ -161,7 +166,8 @@ let g:indentLine_char = '┆'
 
 " ---------------------------------------------------
 Plugin 'Valloric/YouCompleteMe'
-
+let g:ycm_key_list_select_completion = ['<TAB>', '<Down>', '<Enter>']
+let g:ycm_disable_for_files_larger_than_kb = 1
 
 " ---------------------------------------------------
 Plugin 'othree/xml.vim' "html closeTag is ok
@@ -174,6 +180,10 @@ Plugin 'exvim/ex-indenthtml.vim'
 "template
 Plugin '8427003/vim-template'
 
+" ---------------------------------------------------
+" vim-less
+Plugin 'groenewege/vim-less'
+
 
 " ---------------------------------------------------
 Plugin 'Raimondi/delimitMate' "() {} 括号匹配 is ok
@@ -184,7 +194,6 @@ au FileType mail let b:delimitMate_expand_cr = 1
 " ---------------------------------------------------
 " vim-javascript 代码高亮
 Plugin 'pangloss/vim-javascript'
-
 
  " ---------------------------------------------------
  " ex-showmarks: invoke by m... or <leader>mm, <leader>ma
@@ -226,7 +235,8 @@ Plugin 'mileszs/ack.vim'
 
 " ---------------------------------------------------
 " ex-colorschemes
-Plugin '8427003/vim-colorschemes'
+" Plugin '8427003/vim-colorschemes'
+Plugin 'tomasr/molokai'
 
 " ---------------------------------------------------
 "系统粘贴版
@@ -296,7 +306,25 @@ filetype plugin indent on    " required
 " ------------------------------------------------------------------
 " 颜色主题设置
 " ------------------------------------------------------------------
+let g:molokai_original = 1
 colorscheme molokai
+
+let g:SuperTabDefaultCompletionType="<C-X><C-O>"
+let g:SuperTabRetainCompletionType=1
+let g:SuperTabMappingForward="<tab>"
+
+
+" ------------------------------------------------------------------
+" 搜索
+" ------------------------------------------------------------------
+set showmatch " show matching paren
+set incsearch " do incremental searching
+set hlsearch " highlight search terms
+set ignorecase " set search/replace pattern to ignore case
+set smartcase " set smartcase mode on, If there is upper case character in the search patern, the 'ignorecase' option will be override.
+
+
+
 
 
 " ------------------------------------------------------------------
@@ -306,5 +334,23 @@ colorscheme molokai
 :set linespace=2 "行间距
 :set autochdir "自动设当前编辑的文件所在目录为当前工作路径
 
+syntax enable "语法高亮
+syntax on "语法高亮
+
 vnoremap <leader>w <c-w>w
 nnoremap <leader>w <c-w>w
+
+" 自动切换目录为当前编辑文件所在目录
+au BufRead,BufNewFile,BufEnter * cd %:p:h
+
+
+" 禁止保存临时文件
+set nobackup
+set nowritebackup
+
+"取消交换文件
+set noswapfile
+
+"取消行号背景色
+hi LineNr ctermbg=none guifg=#BCBCBC guibg=#232526
+hi Visual ctermbg=240 guibg=#808080
