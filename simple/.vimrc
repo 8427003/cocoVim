@@ -353,4 +353,8 @@ set noswapfile
 
 "取消行号背景色
 hi LineNr ctermbg=none guifg=#BCBCBC guibg=#232526
+"visual 背景效果加强
 hi Visual ctermbg=240 guibg=#808080
+
+" 高亮显示当前的行和列
+set cursorline
