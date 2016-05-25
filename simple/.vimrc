@@ -160,8 +160,8 @@ endfunction
 
 " ---------------------------------------------------
 Plugin 'Yggdroot/indentLine'
-let g:indentLine_leadingSpaceChar = '.'
-let g:indentLine_leadingSpaceEnabled = 1
+"let g:indentLine_leadingSpaceChar = '.'
+"let g:indentLine_leadingSpaceEnabled = 1
 let g:indentLine_char = '┆'
 
 " ---------------------------------------------------
@@ -187,8 +187,8 @@ Plugin 'groenewege/vim-less'
 
 " ---------------------------------------------------
 Plugin 'Raimondi/delimitMate' "() {} 括号匹配 is ok
-let delimitMate_expand_cr = 1 "let -R indent
-au FileType mail let b:delimitMate_expand_cr = 1
+"let delimitMate_expand_cr = 1 "let -R indent
+"au FileType mail let b:delimitMate_expand_cr = 1
 "inoremap <expr> <Tab> <C-Tab>
 
 " ---------------------------------------------------
@@ -358,3 +358,5 @@ hi Visual ctermbg=240 guibg=#808080
 
 " 高亮显示当前的行和列
 set cursorline
+
+set nopaste
