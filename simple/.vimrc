@@ -167,7 +167,7 @@ let g:indentLine_char = '┆'
 " ---------------------------------------------------
 Plugin 'Valloric/YouCompleteMe'
 let g:ycm_key_list_select_completion = ['<TAB>', '<Down>', '<Enter>']
-let g:ycm_disable_for_files_larger_than_kb = 1
+let g:ycm_disable_for_files_larger_than_kb = 1024
 
 " ---------------------------------------------------
 Plugin 'othree/xml.vim' "html closeTag is ok
@@ -324,8 +324,15 @@ set ignorecase " set search/replace pattern to ignore case
 set smartcase " set smartcase mode on, If there is upper case character in the search patern, the 'ignorecase' option will be override.
 
 
+" ------------------------------------------------------------------
+" 备份
+" ------------------------------------------------------------------
+" 禁止保存临时文件
+set nobackup
+set nowritebackup
 
-
+"取消交换文件
+set noswapfile
 
 " ------------------------------------------------------------------
 " 其它设置
@@ -343,13 +350,6 @@ nnoremap <leader>w <c-w>w
 " 自动切换目录为当前编辑文件所在目录
 au BufRead,BufNewFile,BufEnter * cd %:p:h
 
-
-" 禁止保存临时文件
-set nobackup
-set nowritebackup
-
-"取消交换文件
-set noswapfile
 
 "取消行号背景色
 hi LineNr ctermbg=none guifg=#BCBCBC guibg=#232526
