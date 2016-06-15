@@ -361,5 +361,15 @@ hi Visual ctermbg=240 guibg=#808080
 " 高亮显示当前的行和列
 set cursorline
 
-" vim在粘贴内容的时候，如果遇到以#开始的注释行，会自动将后续的所有行进行注释
-set paste
+" Automatically set paste mode in Vim when pasting in insert mode
+" https://coderwall.com/p/if9mda/automatically-set-paste-mode-in-vim-when-pasting-in-insert-mode
+let &t_SI .= "\<Esc>[?2004h"
+let &t_EI .= "\<Esc>[?2004l"
+
+inoremap <special> <expr> <Esc>[200~ XTermPasteBegin()
+
+function! XTermPasteBegin()
+  set pastetoggle=<Esc>[201~
+  set paste
+  return ""
+endfunction
