@@ -361,4 +361,5 @@ hi Visual ctermbg=240 guibg=#808080
 " 高亮显示当前的行和列
 set cursorline
 
-set nopaste
+" vim在粘贴内容的时候，如果遇到以#开始的注释行，会自动将后续的所有行进行注释
+set paste
