@@ -97,7 +97,7 @@ let g:airline#extensions#tabline#fnamemod = ':t'
 " " let g:airline_section_warning = airline#section#create(['whitespace']) " NOTE: airline#section#create has no effect in .vimrc initialize pahse
 " " let g:airline_section_warning = '%{airline#util#wrap(airline#extensions#whitespace#check(),0)}'
  let g:airline_section_warning = ''
-set laststatus=2 " always have status-line
+"set laststatus=2 " always have status-line
 
 
  " ---------------------------------------------------
@@ -373,3 +373,5 @@ function! XTermPasteBegin()
   set paste
   return ""
 endfunction
+
+set shell=/bin/bash "must be the shell, or the vundle run error
