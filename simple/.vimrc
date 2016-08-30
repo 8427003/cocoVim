@@ -97,7 +97,8 @@ let g:airline#extensions#tabline#fnamemod = ':t'
 " " let g:airline_section_warning = airline#section#create(['whitespace']) " NOTE: airline#section#create has no effect in .vimrc initialize pahse
 " " let g:airline_section_warning = '%{airline#util#wrap(airline#extensions#whitespace#check(),0)}'
  let g:airline_section_warning = ''
-"set laststatus=2 " always have status-line
+set rtp+=/usr/local/lib/python2.7/site-packages/powerline/bindings/vim
+set laststatus=2 " always have status-line
 
 
  " ---------------------------------------------------
@@ -168,8 +169,9 @@ let g:indentLine_char = ''
 
 " ---------------------------------------------------
 Plugin 'Valloric/YouCompleteMe'
-let g:ycm_key_list_select_completion = ['<TAB>', '<Down>', '<Enter>']
+let g:ycm_key_list_select_completion = ['<Tab>', '<Down>', '<Enter>']
 let g:ycm_disable_for_files_larger_than_kb = 1024
+set completeopt-=preview
 
 " ---------------------------------------------------
 Plugin 'othree/xml.vim' "html closeTag is ok
@@ -373,5 +375,11 @@ function! XTermPasteBegin()
   set paste
   return ""
 endfunction
+
+" undo 持久化
+if has('persistent_undo')      "check if your vim version supports it
+  set undofile                 "turn on the feature  
+  set undodir=~/.vim/undodir  "directory where the undo files will be stored
+endif 
 
 set shell=/bin/bash "must be the shell, or the vundle run error
