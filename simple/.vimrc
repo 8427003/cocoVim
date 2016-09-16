@@ -79,25 +79,15 @@ set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 Plugin 'VundleVim/Vundle.vim'
 
+
+Plugin 'trusktr/seti.vim'
+
 " ---------------------------------------------------
 "vim-airline
 Plugin 'bling/vim-airline'
-if has('gui_running')
- let g:airline_powerline_fonts = 1
-else
- let g:airline_powerline_fonts = 0
-endif
-
-let g:airline#extensions#tabline#enabled = 0 " NOTE: When you open lots of buffers and typing text, it is so slow.
-let g:airline#extensions#tabline#show_buffers = 1
-let g:airline#extensions#tabline#buffer_nr_show = 1
-let g:airline#extensions#tabline#fnamemod = ':t'
-" " let g:airline_section_b = "%{fnamemodify(bufname('%'),':p:.:h').'/'}"
-" " let g:airline_section_c = '%t'
-" " let g:airline_section_warning = airline#section#create(['whitespace']) " NOTE: airline#section#create has no effect in .vimrc initialize pahse
-" " let g:airline_section_warning = '%{airline#util#wrap(airline#extensions#whitespace#check(),0)}'
- let g:airline_section_warning = ''
-set rtp+=/usr/local/lib/python2.7/site-packages/powerline/bindings/vim
+Plugin 'vim-airline/vim-airline-themes'
+let g:airline_powerline_fonts = 1
+let g:airline_theme='base16_default'
 set laststatus=2 " always have status-line
 
 
@@ -381,5 +371,10 @@ if has('persistent_undo')      "check if your vim version supports it
   set undofile                 "turn on the feature  
   set undodir=~/.vim/undodir  "directory where the undo files will be stored
 endif 
+
+" 重新打开文件后，光标在先前的位置 ---start
+set viminfo='10,\"100,:20,%,n~/.viminfo 
+au BufReadPost * if line("'\"") > 0|if line("'\"") <= line("$")|exe("norm '\"")|else|exe "norm $"|endif|endif 
+" 重新打开文件后，光标在先前的位置 ---end
 
 set shell=/bin/bash "must be the shell, or the vundle run error
