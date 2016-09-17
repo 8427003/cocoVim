@@ -5,28 +5,10 @@ let mapleader = "\<Space>"
 " 字体设置
 " ------------------------------------------------------------------
 " set default guifont
-if has('gui_running')
-    augroup ex_gui_font
-        " check and determine the gui font after GUIEnter.
-        " NOTE: getfontname function only works after GUIEnter.
-        au!
-        au GUIEnter * call s:set_gui_font()
-    augroup END
-
-    " set guifont
-    function! s:set_gui_font()
-        if getfontname( 'DejaVu Sans Mono for Powerline' ) != ''
-            set guifont=DejaVu\ Sans\ Mono\ for\ Powerline:h15
-        elseif getfontname( 'DejaVu Sans Mono' ) != ''
-            set guifont=DejaVu\ Sans\ Mono:h15
-        endif
-    endfunction
-else
-    " 设置终端的256色
-    set t_Co=256
-    colorscheme torte
-    set background=dark
-endif
+" 设置终端的256色
+set t_Co=256
+colorscheme torte
+set background=dark
 
 " ------------------------------------------------------------------
 " 显示设置
@@ -306,10 +288,6 @@ filetype plugin indent on    " required
 let g:molokai_original = 1
 colorscheme molokai
 
-let g:SuperTabDefaultCompletionType="<C-X><C-O>"
-let g:SuperTabRetainCompletionType=1
-let g:SuperTabMappingForward="<tab>"
-
 
 " ------------------------------------------------------------------
 " 搜索
@@ -341,8 +319,9 @@ set noswapfile
 syntax enable "语法高亮
 syntax on "语法高亮
 
-vnoremap <leader>w <c-w>w
-nnoremap <leader>w <c-w>w
+"ctrl+w -> leader + w
+"vnoremap <leader>w <c-w>w
+"nnoremap <leader>w <c-w>w
 
 " 自动切换目录为当前编辑文件所在目录
 au BufRead,BufNewFile,BufEnter * cd %:p:h
@@ -356,28 +335,39 @@ hi Visual ctermbg=240 guibg=#808080
 " 高亮显示当前的行和列
 set cursorline
 
+
+" ------------------------------------------------------------------
 " Automatically set paste mode in Vim when pasting in insert mode
+" ------------------------------------------------------------------
 " https://coderwall.com/p/if9mda/automatically-set-paste-mode-in-vim-when-pasting-in-insert-mode
+"
 let &t_SI .= "\<Esc>[?2004h"
 let &t_EI .= "\<Esc>[?2004l"
-
 inoremap <special> <expr> <Esc>[200~ XTermPasteBegin()
-
 function! XTermPasteBegin()
   set pastetoggle=<Esc>[201~
   set paste
   return ""
 endfunction
 
+
+
+
+" ------------------------------------------------------------------
 " undo 持久化
+" ------------------------------------------------------------------
 if has('persistent_undo')      "check if your vim version supports it
   set undofile                 "turn on the feature  
   set undodir=~/.vim/undodir  "directory where the undo files will be stored
 endif 
 
+
+
+" ------------------------------------------------------------------
 " 重新打开文件后，光标在先前的位置 ---start
+" ------------------------------------------------------------------
 set viminfo='10,\"100,:20,%,n~/.viminfo 
 au BufReadPost * if line("'\"") > 0|if line("'\"") <= line("$")|exe("norm '\"")|else|exe "norm $"|endif|endif 
-" 重新打开文件后，光标在先前的位置 ---end
+
 
 set shell=/bin/bash "must be the shell, or the vundle run error
