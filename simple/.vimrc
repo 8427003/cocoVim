@@ -292,7 +292,6 @@ set noswapfile
 :set linespace=2 "行间距
 :set autochdir "自动设当前编辑的文件所在目录为当前工作路径
 
-syntax enable "语法高亮
 syntax on "语法高亮
 
 "ctrl+w -> leader + w
@@ -375,6 +374,24 @@ hi ShowMarksHLm ctermfg=161 ctermbg=235 cterm=bold guifg=red guibg=#232526
 " 切换窗口
 vnoremap <leader>w <c-w>w
 nnoremap <leader>w <c-w>w
+
+
+" ------------------------------------------------------------------
+" 开启语法高亮后，速度特别慢
+" http://superuser.com/questions/302186/vim-scrolls-very-slowly-when-a-line-is-too-long
+" http://stackoverflow.com/questions/4775605/vim-syntax-highlight-improve-performance
+" ------------------------------------------------------------------
+set synmaxcol=128
+set ttyfast " u got a fast terminal
+set ttyscroll=3
+set lazyredraw "
+
+set nocursorcolumn
+set nocursorline
+set norelativenumber
+syntax sync minlines=256
+
+
 
 
 " ------------------------------------------------------------------
