@@ -2,19 +2,9 @@
 let mapleader = "\<Space>"
 
 " ------------------------------------------------------------------
-" 字体设置
-" ------------------------------------------------------------------
-" set default guifont
-" 设置终端的256色
-set t_Co=256
-colorscheme torte
-set background=dark
-
-" ------------------------------------------------------------------
 " 显示设置
 " ------------------------------------------------------------------
 set nu " show line number
-set guioptions-=L "隐藏左侧滚动条
 
 
 " ------------------------------------------------------------------
@@ -34,21 +24,6 @@ set expandtab " set expandtab on, the tab will be change to space automaticaly
 set ve=block " in visual block mode, cursor can be positioned where there is no actual character
 
 set backspace=indent,eol,start
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -174,18 +149,7 @@ Plugin 'Raimondi/delimitMate' "() {} 括号匹配 is ok
 " vim-javascript 代码高亮
 Plugin 'pangloss/vim-javascript'
 
- " ---------------------------------------------------
- " ex-showmarks: invoke by m... or <leader>mm, <leader>ma
- Plugin 'exvim/ex-showmarks'
- " TODO: bootleq/ShowMarks on github is well organized in code, but have lots
- " bugs, consider merge his code and fixes the bugs
- let g:showmarks_enable = 1
- let g:showmarks_include = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
- let g:showmarks_ignore_type = 'hqm'
 
- " Hilight lower & upper marks
- let g:showmarks_hlline_lower = 1
- let g:showmarks_hlline_upper = 0
 
  " ---------------------------------------------------
  Plugin 'terryma/vim-expand-region'
@@ -214,8 +178,25 @@ Plugin 'mileszs/ack.vim'
 
 " ---------------------------------------------------
 " ex-colorschemes
-" Plugin '8427003/vim-colorschemes'
 Plugin 'tomasr/molokai'
+let g:rehash256 = 1
+
+" ---------------------------------------------------
+" ex-showmarks: invoke by m... or <leader>mm, <leader>ma
+Plugin 'exvim/ex-showmarks'
+" TODO: bootleq/ShowMarks on github is well organized in code, but have lots
+" bugs, consider merge his code and fixes the bugs
+
+let g:showmarks_enable = 1
+let g:showmarks_include = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
+let g:showmarks_ignore_type = 'hqm'
+
+" Hilight lower & upper marks
+let g:showmarks_hlline_lower = 1
+let g:showmarks_hlline_upper = 0
+
+
+
 
 " ---------------------------------------------------
 "系统粘贴版
@@ -282,11 +263,6 @@ filetype plugin indent on    " required
 
 
 
-" ------------------------------------------------------------------
-" 颜色主题设置
-" ------------------------------------------------------------------
-let g:molokai_original = 1
-colorscheme molokai
 
 
 " ------------------------------------------------------------------
@@ -327,10 +303,6 @@ syntax on "语法高亮
 au BufRead,BufNewFile,BufEnter * cd %:p:h
 
 
-"取消行号背景色
-hi LineNr ctermbg=none guifg=#BCBCBC guibg=#232526
-"visual 背景效果加强
-hi Visual ctermbg=240 guibg=#808080
 
 " 高亮显示当前的行和列
 set cursorline
@@ -368,6 +340,32 @@ endif
 " ------------------------------------------------------------------
 set viminfo='10,\"100,:20,%,n~/.viminfo 
 au BufReadPost * if line("'\"") > 0|if line("'\"") <= line("$")|exe("norm '\"")|else|exe "norm $"|endif|endif 
+
+" ------------------------------------------------------------------
+" 主题配色
+" ------------------------------------------------------------------
+let g:molokai_original = 1
+colorscheme molokai
+
+
+" ------------------------------------------------------------------
+" 自定义颜色一定要在主题配色之后，有个优选级覆盖问题---start
+" ------------------------------------------------------------------
+"取消行号背景色
+hi LineNr ctermbg=none guifg=#BCBCBC guibg=#232526
+"visual 背景效果加强
+hi Visual ctermbg=240 guibg=#808080
+
+" mark 背景色
+hi ShowMarksHLl ctermfg=161 ctermbg=235 cterm=bold guifg=red guibg=#232526
+hi ShowMarksHLu ctermfg=161 ctermbg=235 cterm=bold guifg=red guibg=#232526
+hi ShowMarksHLo ctermfg=161 ctermbg=235 cterm=bold guifg=red guibg=#232526
+hi ShowMarksHLm ctermfg=161 ctermbg=235 cterm=bold guifg=red guibg=#232526
+
+" 自定义颜色一定要在主题配色之后，有个优选级覆盖问题---end
+" ------------------------------------------------------------------
+
+
 
 
 set shell=/bin/bash "must be the shell, or the vundle run error
