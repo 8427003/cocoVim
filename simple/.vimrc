@@ -196,6 +196,11 @@ let g:showmarks_hlline_lower = 1
 let g:showmarks_hlline_upper = 0
 
 
+" ---------------------------------------------------
+" elzr/vim-json
+Plugin 'elzr/vim-json'
+let g:vim_json_syntax_conceal = 0
+
 
 
 " ---------------------------------------------------
@@ -391,7 +396,7 @@ set nocursorline
 set norelativenumber
 syntax sync minlines=256
 
-
+set conceallevel=0
 
 
 " ------------------------------------------------------------------
