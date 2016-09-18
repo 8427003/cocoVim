@@ -30,3 +30,6 @@ http://exvim.github.io/downloads/
 clone the project to your local `~/cocoVim`
 
 add `source ~/cocoVim/simple/.vimrc` in `~/.vimrc`
+
+open vim, and `:PluginInstall` install plugins
+
