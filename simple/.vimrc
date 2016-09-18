@@ -299,9 +299,6 @@ set noswapfile
 
 syntax on "语法高亮
 
-"ctrl+w -> leader + w
-"vnoremap <leader>w <c-w>w
-"nnoremap <leader>w <c-w>w
 
 " 自动切换目录为当前编辑文件所在目录
 au BufRead,BufNewFile,BufEnter * cd %:p:h
@@ -377,6 +374,7 @@ hi ShowMarksHLm ctermfg=161 ctermbg=235 cterm=bold guifg=red guibg=#232526
 " ------------------------------------------------------------------
 
 " 切换窗口
+"ctrl+w -> leader + w
 vnoremap <leader>w <c-w>w
 nnoremap <leader>w <c-w>w
 
