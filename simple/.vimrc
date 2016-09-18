@@ -394,8 +394,6 @@ set nocursorline
 set norelativenumber
 syntax sync minlines=256
 
-set conceallevel=0
-
 
 " ------------------------------------------------------------------
 " 脚本选择，比如在fish脚本中安装插件，vundle就会报错
