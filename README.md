@@ -18,3 +18,15 @@ source ~/cocoVim/.vimrc
 
 ##其他一些增强功能可参照
 http://exvim.github.io/downloads/
+
+
+
+# cocoVim Simple版更吸引人
+
+只支持命令行下vim，插件更少，更轻量级,但是包含了最基本的配置。
+
+#install
+
+clone the project to your local `~/cocoVim`
+
+add `source ~/cocoVim/simple/.vimrc` in `~/.vimrc`
