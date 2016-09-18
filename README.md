@@ -23,7 +23,7 @@ http://exvim.github.io/downloads/
 
 # 二、cocoVim Simple版更吸引人(本人正在使用)
 
-只支持命令行下vim，插件更少，更轻量级,但是包含了最基本的配置。
+只支持命令行下vim，插件更少，更轻量级，但是包含了最基本的配置。
 
 #install
 
@@ -32,5 +32,8 @@ clone the project to your local `~/cocoVim`
 add `source ~/cocoVim/simple/.vimrc` in `~/.vimrc`
 
 open vim, and `:PluginInstall` install plugins
+
+
+命令行下vim截图:
 
 ![A screenshot of your package](https://raw.githubusercontent.com/8427003/cocoVim/master/screenshots/cocoVim.png)
