@@ -1,4 +1,4 @@
-# cocoVim
+# 一、cocoVim
 个人的vim配置项目
 
 主要在exvim的结构上进行了修改，所有的配置在文件.vimrc.plugins里,只需要克隆下项目到本地，2行简单配置即可使用
@@ -21,7 +21,7 @@ http://exvim.github.io/downloads/
 
 
 
-# cocoVim Simple版更吸引人
+# 二、cocoVim Simple版更吸引人(本人正在使用)
 
 只支持命令行下vim，插件更少，更轻量级,但是包含了最基本的配置。
 
@@ -33,3 +33,4 @@ add `source ~/cocoVim/simple/.vimrc` in `~/.vimrc`
 
 open vim, and `:PluginInstall` install plugins
 
+![A screenshot of your package](https://raw.githubusercontent.com/8427003/cocoVim/master/screenshots/cocoVim.gif)
