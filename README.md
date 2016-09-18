@@ -34,6 +34,6 @@ add `source ~/cocoVim/simple/.vimrc` in `~/.vimrc`
 open vim, and `:PluginInstall` install plugins
 
 
-命令行下vim截图:
+screenshot in commond line:
 
 ![A screenshot of your package](https://raw.githubusercontent.com/8427003/cocoVim/master/screenshots/cocoVim.png)
