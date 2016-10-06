@@ -395,6 +395,15 @@ set norelativenumber
 syntax sync minlines=256
 
 
+" FINDING FILES:
+" Search down into subfolders
+" Provides tab-completion for all file-related tasks
+set path+=**
+
+" Display all matching files when we tab complete
+set wildmenu
+set wildmode=longest:list,full
+
 " ------------------------------------------------------------------
 " 脚本选择，比如在fish脚本中安装插件，vundle就会报错
 " ------------------------------------------------------------------
