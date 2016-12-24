@@ -46,12 +46,12 @@ screenshot in commond line:
 
 ## 遇到的问题：
 1. E576: Failed to parse ShaDa file: extra bytes in msgpack string at position 3
-    
-    解：删除~/.viminfo（与以前的vim共用估计格式不兼容，故删除重新生成文件）
+ 
+ 解：删除~/.viminfo（与以前的vim共用估计格式不兼容，故删除重新生成文件）
     （https://github.com/neovim/neovim/issues/3469#issuecomment-148897966）
     
 2. youcomelateme，提示python....
 
-    解：需要安装provider-python 
-    `pip2 install --user --upgrade neovim`
-    （https://neovim.io/doc/user/provider.html#provider-python）
+ 解：需要安装provider-python 
+ `pip2 install --user --upgrade neovim`
+ （https://neovim.io/doc/user/provider.html#provider-python）
