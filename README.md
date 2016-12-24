@@ -51,6 +51,7 @@ screenshot in commond line:
     （https://github.com/neovim/neovim/issues/3469#issuecomment-148897966）
     
 2. youcomelateme，提示python....
+
     解：需要安装provider-python 
     `pip2 install --user --upgrade neovim`
     （https://neovim.io/doc/user/provider.html#provider-python）
