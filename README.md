@@ -37,3 +37,14 @@ open vim, and `:PluginInstall` install plugins
 screenshot in commond line:
 
 ![A screenshot of your package](https://raw.githubusercontent.com/8427003/cocoVim/master/screenshots/cocoVim.png)
+
+# 三、from vim to neovim
+
+## 1. 安neovvim官方文档 brew 安装neovim
+## 2. do as :help nvim-from-vim
+
+## 遇到的问题：
+### 1. E576: Failed to parse ShaDa file: extra bytes in msgpack string at position 3
+    解：删除~/.viminfo（与以前的vim共用估计格式不兼容，故删除重新生成文件）
+### 2. youcomelateme，提示python....
+    解：需要安装provider-python（https://neovim.io/doc/user/provider.html#provider-python）
