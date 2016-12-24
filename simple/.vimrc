@@ -114,8 +114,8 @@ Plugin 'Yggdroot/indentLine'
 "let g:indentLine_leadingSpaceChar = '.'
 "let g:indentLine_leadingSpaceEnabled = 1
 let g:indentLine_char = ''
-"let g:indentLine_first_char = ''
-"let g:indentLine_showFirstIndentLevel = 1
+let g:indentLine_first_char = ''
+let g:indentLine_showFirstIndentLevel = 1
 
 " ---------------------------------------------------
 Plugin 'Valloric/YouCompleteMe'
@@ -148,7 +148,7 @@ Plugin 'Raimondi/delimitMate' "() {} 括号匹配 is ok
 " ---------------------------------------------------
 " vim-javascript 代码高亮
 Plugin 'pangloss/vim-javascript'
-
+Plugin 'mxw/vim-jsx'
 
 
  " ---------------------------------------------------
@@ -301,7 +301,7 @@ syntax on "语法高亮
 
 
 " 自动切换目录为当前编辑文件所在目录
-au BufRead,BufNewFile,BufEnter * cd %:p:h
+" au BufRead,BufNewFile,BufEnter * cd %:p:h
 
 
 
@@ -386,7 +386,7 @@ nnoremap <leader>w <c-w>w
 " ------------------------------------------------------------------
 set synmaxcol=128
 set ttyfast " u got a fast terminal
-set ttyscroll=3
+" set ttyscroll=3
 set lazyredraw "
 
 set nocursorcolumn
