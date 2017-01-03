@@ -111,8 +111,8 @@ endfunction
 
 " ---------------------------------------------------
 Plugin 'Yggdroot/indentLine'
-"let g:indentLine_leadingSpaceChar = '.'
-"let g:indentLine_leadingSpaceEnabled = 1
+let g:indentLine_leadingSpaceChar = '.'
+let g:indentLine_leadingSpaceEnabled = 1
 let g:indentLine_char = ''
 let g:indentLine_first_char = ''
 let g:indentLine_showFirstIndentLevel = 1
@@ -137,6 +137,10 @@ Plugin '8427003/vim-template'
 " ---------------------------------------------------
 " vim-less
 Plugin 'groenewege/vim-less'
+
+" ---------------------------------------------------
+" vim-sass
+Plugin 'tpope/vim-haml'
 
 
 " ---------------------------------------------------
@@ -178,6 +182,7 @@ Plugin 'mileszs/ack.vim'
 
 " ---------------------------------------------------
 " ex-colorschemes
+" Plugin 'dracula/vim'
 Plugin 'tomasr/molokai'
 let g:rehash256 = 1
 
@@ -347,6 +352,7 @@ au BufReadPost * if line("'\"") > 0|if line("'\"") <= line("$")|exe("norm '\"")|
 " ------------------------------------------------------------------
 let g:molokai_original = 1
 colorscheme molokai
+" colorscheme dracula
 
 
 " ------------------------------------------------------------------
