@@ -140,7 +140,7 @@ Plugin 'groenewege/vim-less'
 
 " ---------------------------------------------------
 " vim-sass
-Plugin 'tpope/vim-haml'
+Plugin 'cakebaker/scss-syntax.vim'
 
 
 " ---------------------------------------------------
