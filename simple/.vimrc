@@ -54,13 +54,23 @@ set laststatus=2 " always have status-line
  " ---------------------------------------------------
  " ctrlp: invoke by <ctrl-p>
  Plugin 'kien/ctrlp.vim'
- let g:ctrlp_working_path_mode = ''
  let g:ctrlp_match_window = 'bottom,order:ttb,min:30,max:30,results:30'
  let g:ctrlp_follow_symlinks = 2
  let g:ctrlp_max_files = 0 " Unset cap of 10,000 files so we find everything
  let g:ctrlp_cache_dir = $HOME.'/.cache/ctrlp'
- nnoremap <unique> <leader>bs :CtrlPBuffer<CR>
  let g:ctrlp_regexp = 1
+
+ " ignore
+ set wildignore+=*/tmp/*,*/node_modules/*,*\\bower_components\\*,*.so,*.swp,*.zip     " MacOSX/Linux
+ set wildignore+=*\\tmp\\*,*\\node_modules\\*,*\\bower_components\\*,*.swp,*.zip,*.exe  " Windows
+ let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn|node_modules|bower_components)$'
+ let g:ctrlp_custom_ignore = {
+  \ 'dir':  '\v[\/]\.(git|hg|svn|node_modules|bower_components)$',
+  \ 'file': '\v\.(exe|so|dll)$',
+  \ 'link': 'some_bad_symbolic_links',
+  \ }
+
+ nmap <CR> :CtrlPBuffer<CR>
 
 
  " ---------------------------------------------------
