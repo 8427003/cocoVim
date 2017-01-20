@@ -64,9 +64,8 @@ set laststatus=2 " always have status-line
  " ignore
  set wildignore+=*/tmp/*,*/node_modules/*,*\\bower_components\\*,*.so,*.swp,*.zip     " MacOSX/Linux
  set wildignore+=*\\tmp\\*,*\\node_modules\\*,*\\bower_components\\*,*.swp,*.zip,*.exe  " Windows
- let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn|node_modules|bower_components)$'
  let g:ctrlp_custom_ignore = {
-  \ 'dir':  '\v[\/]\.(git|hg|svn|node_modules|bower_components)$',
+  \ 'dir':  '\.git$\|\.hg$\|\.svn$\|bower_components$\|dist$\|node_modules$\|project_files$\|test$',
   \ 'file': '\v\.(exe|so|dll)$',
   \ 'link': 'some_bad_symbolic_links',
   \ }
