@@ -72,7 +72,6 @@ set laststatus=2 " always have status-line
 
  nmap <CR> :CtrlPBuffer<CR>
 
-
  " ---------------------------------------------------
  " nerdtree: invoke by :NERDTreeToggle
  Plugin 'scrooloose/nerdtree'
@@ -81,6 +80,7 @@ set laststatus=2 " always have status-line
  let g:NERDTreeMapToggleZoom = '<Space>'
  let g:NERDTreeMinimalUI=1 "不显示帮助面板
  let g:NERDTreeDirArrows=1 "目录箭头 1 显示箭头  0传统+-|号
+ let NERDTreeShowHidden=1 "显示隐藏文件
  "autocmd vimenter * NERDTree "自动以当前目录打开tree
  nmap nf :NERDTreeFind<CR>"锁定文件对应目录树位置
  nmap <F3> :NERDTreeToggle<CR>
