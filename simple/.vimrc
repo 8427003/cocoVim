@@ -44,7 +44,7 @@ Plugin 'trusktr/seti.vim'
 Plugin 'bling/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
 let g:airline_powerline_fonts = 1
-let g:airline_theme='base16_default'
+let g:airline_theme='monochrome'
 let g:airline_section_z = '%l:%c'
 let g:airline_section_warning=''
 let g:airline_section_x=''
@@ -53,7 +53,8 @@ set laststatus=2 " always have status-line
 
  " ---------------------------------------------------
  " ctrlp: invoke by <ctrl-p>
- Plugin 'kien/ctrlp.vim'
+ "Plugin 'kien/ctrlp.vim' 不再维护
+ Plugin 'ctrlpvim/ctrlp.vim'
  let g:ctrlp_match_window = 'bottom,order:ttb,min:30,max:30,results:30'
  let g:ctrlp_follow_symlinks = 2
  let g:ctrlp_max_files = 0 " Unset cap of 10,000 files so we find everything
