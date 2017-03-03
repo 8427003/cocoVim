@@ -135,22 +135,11 @@ set completeopt-=preview
 
 " ---------------------------------------------------
 Plugin 'othree/xml.vim' "html closeTag is ok
-
-" ---------------------------------------------------
-" vim-html "xml.vim 合起来用才   行
-Plugin 'exvim/ex-indenthtml.vim'
+Plugin 'digitaltoad/vim-jade'
 
 " ---------------------------------------------------
 "template
 Plugin '8427003/vim-template'
-
-" ---------------------------------------------------
-" vim-less
-Plugin 'groenewege/vim-less'
-
-" ---------------------------------------------------
-" vim-sass
-Plugin 'cakebaker/scss-syntax.vim'
 
 
 " ---------------------------------------------------
@@ -161,7 +150,6 @@ Plugin 'Raimondi/delimitMate' "() {} 括号匹配 is ok
 
 " ---------------------------------------------------
 " vim-javascript 代码高亮
-Plugin 'pangloss/vim-javascript'
 Plugin 'mxw/vim-jsx'
 
 
@@ -217,8 +205,12 @@ Plugin 'elzr/vim-json'
 let g:vim_json_syntax_conceal = 0
 
 
-
 " ---------------------------------------------------
+" sheerun/vim-polyglot // 各种语言，语法高亮缩减集合
+Plugin 'sheerun/vim-polyglot'
+
+
+" --------------------------------------------------
 "系统粘贴版
 vmap <Leader>y "+y
 vmap <Leader>d "+d
@@ -419,7 +411,6 @@ set path+=**
 " Display all matching files when we tab complete
 set wildmenu
 set wildmode=longest:list,full
-
 " ------------------------------------------------------------------
 " 脚本选择，比如在fish脚本中安装插件，vundle就会报错
 " ------------------------------------------------------------------
