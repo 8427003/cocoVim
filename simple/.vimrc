@@ -404,7 +404,10 @@ set path+=**
 " Display all matching files when we tab complete
 set wildmenu
 set wildmode=longest:list,full
+
 " ------------------------------------------------------------------
 " 脚本选择，比如在fish脚本中安装插件，vundle就会报错
 " ------------------------------------------------------------------
-set shell=/bin/bash "must be the shell, or the vundle run error
+"set shell=/bin/bash "must be the shell, or the vundle run error
+set shell=/bin/zsh "commond :sh can change to zsh
+
