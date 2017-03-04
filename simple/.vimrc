@@ -98,26 +98,6 @@ map <leader>l <Plug>(easymotion-lineforward)
 map <leader>h <Plug>(easymotion-linebackward)
 let g:EasyMotion_startofline = 0 " keep cursor colum when JK motion
 
-" ---------------------------------------------------
-" undotree: invoke by <Leader>u
-Plugin 'mbbill/undotree'
-nnoremap <leader>u :UndotreeToggle<CR>
-let g:undotree_SetFocusWhenToggle=1
-let g:undotree_WindowLayout = 4
-
-" NOTE: this will prevent undotree closed then jump to minibufexpl
-function! g:CloseUndotree()
-    call UndotreeHide()
-    call ex#window#goto_edit_window()
-endfunction
-
-function g:Undotree_CustomMap()
-    if has('gui_running')
-        nnoremap <silent> <script> <buffer> <ESC> :call g:CloseUndotree()<CR>
-    else
-        nnoremap <silent> <script> <buffer> <leader><ESC> :call g:CloseUndotree()<CR>
-    endif
-endfunction
 
 " ---------------------------------------------------
 Plugin 'Yggdroot/indentLine'
@@ -129,9 +109,22 @@ let g:indentLine_showFirstIndentLevel = 1
 
 " ---------------------------------------------------
 Plugin 'Valloric/YouCompleteMe'
+" must complier in .vim/YouCompleteMe
 let g:ycm_key_list_select_completion = ['<Tab>', '<Down>', '<Enter>']
 let g:ycm_disable_for_files_larger_than_kb = 1024
+
+" add css complete
+let g:ycm_semantic_triggers = {
+   \   'css': [ 're!^\s{4}', 're!:\s+' ],
+   \ }
+
 set completeopt-=preview
+
+
+Plugin 'marijnh/tern_for_vim'
+" must run 'npm install' in ~/.vim/tern_for_vim
+" and add ~/.tern_project
+
 
 " ---------------------------------------------------
 Plugin 'othree/xml.vim' "html closeTag is ok
