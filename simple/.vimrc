@@ -4,7 +4,7 @@ let mapleader = "\<Space>"
 " ------------------------------------------------------------------
 " 显示设置
 " ------------------------------------------------------------------
-set nu " show line number
+set nu! " show line number
 
 
 " ------------------------------------------------------------------
@@ -101,11 +101,12 @@ let g:EasyMotion_startofline = 0 " keep cursor colum when JK motion
 
 " ---------------------------------------------------
 Plugin 'Yggdroot/indentLine'
-let g:indentLine_leadingSpaceChar = '.'
-let g:indentLine_leadingSpaceEnabled = 1
-let g:indentLine_char = ''
-let g:indentLine_first_char = ''
-let g:indentLine_showFirstIndentLevel = 1
+"let g:indentLine_leadingSpaceChar = '.'
+"let g:indentLine_leadingSpaceEnabled = 1
+"let g:indentLine_char = ''
+let g:indentLine_char = ' '
+"let g:indentLine_first_char = ''
+"let g:indentLine_showFirstIndentLevel = 1
 
 " ---------------------------------------------------
 Plugin 'Valloric/YouCompleteMe'
@@ -203,6 +204,24 @@ let g:vim_json_syntax_conceal = 0
 Plugin 'sheerun/vim-polyglot'
 
 
+" ---------------------------------------------------
+" 片段支持
+"
+" Track the engine.
+Plugin 'SirVer/ultisnips'
+
+" Snippets are separated from the engine. Add this if you want them:
+Plugin 'honza/vim-snippets'
+
+" Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
+let g:UltiSnipsExpandTrigger="<leader><tab>"
+let g:UltiSnipsJumpForwardTrigger="<c-f>"
+let g:UltiSnipsJumpBackwardTrigger="<c-b>"
+
+" If you want :UltiSnipsEdit to split your window.
+let g:UltiSnipsEditSplit="vertical"
+
+
 " --------------------------------------------------
 "系统粘贴版
 vmap <Leader>y "+y
@@ -297,7 +316,7 @@ set noswapfile
 :set linespace=2 "行间距
 :set autochdir "自动设当前编辑的文件所在目录为当前工作路径
 
-syntax on "语法高亮
+syntax off "语法高亮
 
 
 " 自动切换目录为当前编辑文件所在目录
@@ -385,13 +404,13 @@ nnoremap <leader>w <c-w>w
 " http://superuser.com/questions/302186/vim-scrolls-very-slowly-when-a-line-is-too-long
 " http://stackoverflow.com/questions/4775605/vim-syntax-highlight-improve-performance
 " ------------------------------------------------------------------
-set synmaxcol=128
+set synmaxcol=80
 set ttyfast " u got a fast terminal
 " set ttyscroll=3
-set lazyredraw "
+set lazyredraw
 
 set nocursorcolumn
-set nocursorline
+set cursorline!
 set norelativenumber
 syntax sync minlines=256
 
