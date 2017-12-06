@@ -407,7 +407,7 @@ nnoremap <leader>w <c-w>w
 " http://superuser.com/questions/302186/vim-scrolls-very-slowly-when-a-line-is-too-long
 " http://stackoverflow.com/questions/4775605/vim-syntax-highlight-improve-performance
 " ------------------------------------------------------------------
-set synmaxcol=80
+set synmaxcol=200
 set ttyfast " u got a fast terminal
 " set ttyscroll=3
 set lazyredraw
