@@ -207,6 +207,7 @@ Plugin 'honza/vim-snippets'
 let g:UltiSnipsExpandTrigger = "<nop>" "直接<Enter>就不能换行了，why?
 
 " 模拟<Enter>
+" https://github.com/SirVer/ultisnips/issues/376
 function ExpandSnippetOrCarriageReturn()
     let snippet = UltiSnips#ExpandSnippetOrJump()
     if g:ulti_expand_or_jump_res > 0
