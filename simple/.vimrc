@@ -102,7 +102,7 @@ let g:EasyMotion_startofline = 0 " keep cursor colum when JK motion
 " ---------------------------------------------------
 "Plugin 'Yggdroot/indentLine'
 "let g:indentLine_leadingSpaceChar = '.'
-"let g:indentLine_leadingSpaceEnabled = 1
+"let g:indentLine_leadingSpaceEnabled = 1 "此项打开会引起jsx里的html缩进问题
 "let g:indentLine_char = ''
 "let g:indentLine_char = ' '
 "let g:indentLine_first_char = ''
