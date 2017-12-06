@@ -100,18 +100,19 @@ let g:EasyMotion_startofline = 0 " keep cursor colum when JK motion
 
 
 " ---------------------------------------------------
-Plugin 'Yggdroot/indentLine'
+"Plugin 'Yggdroot/indentLine'
 "let g:indentLine_leadingSpaceChar = '.'
 "let g:indentLine_leadingSpaceEnabled = 1
 "let g:indentLine_char = ''
-let g:indentLine_char = ' '
+"let g:indentLine_char = ' '
 "let g:indentLine_first_char = ''
 "let g:indentLine_showFirstIndentLevel = 1
 
 " ---------------------------------------------------
 Plugin 'Valloric/YouCompleteMe'
 " must complier in .vim/YouCompleteMe
-let g:ycm_key_list_select_completion = ['<Tab>', '<Down>', '<Enter>']
+let g:ycm_key_list_select_completion = ['<c-j>', '<Down>','<Tab>']
+let g:ycm_key_list_previous_completion = ['<Up>','<c-k>']
 let g:ycm_disable_for_files_larger_than_kb = 1024
 
 " add css complete
@@ -129,7 +130,6 @@ Plugin 'marijnh/tern_for_vim'
 
 " ---------------------------------------------------
 Plugin 'othree/xml.vim' "html closeTag is ok
-Plugin 'digitaltoad/vim-jade'
 
 " ---------------------------------------------------
 "template
@@ -142,9 +142,12 @@ Plugin 'Raimondi/delimitMate' "() {} 括号匹配 is ok
 "au FileType mail let b:delimitMate_expand_cr = 1
 "inoremap <expr> <Tab> <C-Tab>
 
+
 " ---------------------------------------------------
 " vim-javascript 代码高亮
+Plugin 'pangloss/vim-javascript'
 Plugin 'mxw/vim-jsx'
+let g:jsx_ext_required = 0
 
 
  " ---------------------------------------------------
@@ -166,15 +169,7 @@ Plugin 'heavenshell/vim-jsdoc' " 函数注释
 nmap <silent> tt <Plug>(jsdoc)
 
 " ---------------------------------------------------
-Plugin 'vim-scripts/nerdtree-ack'
-
-" ---------------------------------------------------
-Plugin 'mileszs/ack.vim'
-
-
-" ---------------------------------------------------
 " ex-colorschemes
-" Plugin 'dracula/vim'
 Plugin 'tomasr/molokai'
 let g:rehash256 = 1
 
@@ -199,22 +194,17 @@ Plugin 'elzr/vim-json'
 let g:vim_json_syntax_conceal = 0
 
 
-" ---------------------------------------------------
-" sheerun/vim-polyglot // 各种语言，语法高亮缩减集合
-Plugin 'sheerun/vim-polyglot'
 
 
 " ---------------------------------------------------
 " 片段支持
-"
 " Track the engine.
 Plugin 'SirVer/ultisnips'
-
 " Snippets are separated from the engine. Add this if you want them:
 Plugin 'honza/vim-snippets'
 
 " Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
-let g:UltiSnipsExpandTrigger="<leader><tab>"
+let g:UltiSnipsExpandTrigger="<Enter>"
 let g:UltiSnipsJumpForwardTrigger="<c-f>"
 let g:UltiSnipsJumpBackwardTrigger="<c-b>"
 
@@ -316,7 +306,7 @@ set noswapfile
 :set linespace=2 "行间距
 :set autochdir "自动设当前编辑的文件所在目录为当前工作路径
 
-syntax off "语法高亮
+syntax on "语法高亮
 
 
 " 自动切换目录为当前编辑文件所在目录
