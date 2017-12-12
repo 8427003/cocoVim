@@ -85,6 +85,13 @@ set laststatus=2 " always have status-line
  nmap nf :NERDTreeFind<CR>"锁定文件对应目录树位置
  nmap <F3> :NERDTreeToggle<CR>
 
+ " --------------------------------------------------
+ Plugin 'scrooloose/nerdcommenter'
+ vnoremap <leader>// :call NERDComment(0,"toggle")<CR>
+ nnoremap <leader>// :call NERDComment(0,"toggle")<CR>
+
+
+
 
 " ---------------------------------------------------
 " vim-easymotion: invoke by <leader><leader> w,b,e,ge,f,F,h,i,j,k,/
