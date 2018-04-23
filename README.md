@@ -6,11 +6,13 @@
 
 1. clone the project to your local `~/cocoVim`
 
-2. add `source ~/cocoVim/simple/.vimrc` in `~/.vimrc`
+2. add `source ~/cocoVim/simple/.vimrc` in `~/.vimrc` if not exist creat it first
 
-3. open vim, and `:PluginInstall` install plugins
+3. `git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim`
 
-4. view .vimrc install Special plugs youcompleteme, tern
+4. open vim, and `:PluginInstall` install plugins
+
+5. view .vimrc install Special plugs youcompleteme, tern
 
 screenshot in commond line:
 
