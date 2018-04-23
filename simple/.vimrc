@@ -437,6 +437,10 @@ set wildmode=longest:list,full
 " ------------------------------------------------------------------
 " 脚本选择，比如在fish脚本中安装插件，vundle就会报错
 " ------------------------------------------------------------------
-"set shell=/bin/bash "must be the shell, or the vundle run error
-set shell=/bin/zsh "commond :sh can change to zsh
+set shell=/bin/bash "must be the shell, or the vundle run error
+"
+"how-to-temporarily-exit-vim-and-go-back
+"https://stackoverflow.com/questions/1879219/how-to-temporarily-exit-vim-and-go-back?utm_medium=organic&utm_source=google_rich_qa&utm_campaign=google_rich_qa
+
+"set shell=/bin/zsh "commond :sh can change to zsh
 
