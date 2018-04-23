@@ -6,7 +6,7 @@
 
 1. clone the project to your local `~/cocoVim`
 
-2. add `source ~/cocoVim/simple/.vimrc` in `~/.vimrc` if not exist creat it first
+2. add `source ~/cocoVim/simple/.vimrc` in `~/.vimrc` if not exist create it first
 
 3. `git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim`
 
