@@ -60,12 +60,13 @@ set laststatus=2 " always have status-line
  let g:ctrlp_max_files = 0 " Unset cap of 10,000 files so we find everything
  let g:ctrlp_cache_dir = $HOME.'/.cache/ctrlp'
  let g:ctrlp_regexp = 1
+ let g:ctrlp_working_path_mode = 'rc'
 
  " ignore
  set wildignore+=*/tmp/*,*/node_modules/*,*\\bower_components\\*,*.so,*.swp,*.zip     " MacOSX/Linux
  set wildignore+=*\\tmp\\*,*\\node_modules\\*,*\\bower_components\\*,*.swp,*.zip,*.exe  " Windows
  let g:ctrlp_custom_ignore = {
-  \ 'dir':  '\.git$\|\.hg$\|\.svn$\|bower_components$\|dist$\|node_modules$\|project_files$\|test$',
+  \ 'dir':  '\.git$\|\.hg$\|\.svn$\|bower_components$\|dist$\|node_modules$\|project_files$\|test$|\public$\',
   \ 'file': '\v\.(exe|so|dll)$',
   \ 'link': 'some_bad_symbolic_links',
   \ }
@@ -324,7 +325,10 @@ set noswapfile
 " ------------------------------------------------------------------
 :set wildmode=list ":tabe 能显示目录树
 :set linespace=2 "行间距
-:set autochdir "自动设当前编辑的文件所在目录为当前工作路径
+
+"自动设当前编辑的文件所在目录为当前工作路径
+autocmd BufEnter * silent! lcd %:p:h
+
 
 syntax on "语法高亮
 
