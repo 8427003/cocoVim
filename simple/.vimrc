@@ -81,8 +81,12 @@ set laststatus=2 " always have status-line
  let g:NERDTreeMapToggleZoom = '<Space>'
  let g:NERDTreeMinimalUI=1 "不显示帮助面板
  let g:NERDTreeDirArrows=1 "目录箭头 1 显示箭头  0传统+-|号
- let NERDTreeShowHidden=1 "显示隐藏文件
- "autocmd vimenter * NERDTree "自动以当前目录打开tree
+ let g:NERDTreeShowHidden=1 "显示隐藏文件
+ let g:NERDTreeWinPos = "left"
+ let g:NERDTreeAutoDeleteBuffer=1
+ let g:NERDTreeQuitOnOpen=1 "打开后关闭tree
+
+"autocmd vimenter * NERDTree "自动以当前目录打开tree
  nmap nf :NERDTreeFind<CR>"锁定文件对应目录树位置
  nmap <F3> :NERDTreeToggle<CR>
 
@@ -336,6 +340,10 @@ syntax on "语法高亮
 " 自动切换目录为当前编辑文件所在目录
 " au BufRead,BufNewFile,BufEnter * cd %:p:h
 
+" 小程序文件类型
+au BufRead,BufNewFile *.wxss set ft=css syntax=css
+au BufRead,BufNewFile *.wxml set ft=xml syntax=xml
+
 
 
 " 高亮显示当前的行和列
@@ -363,7 +371,7 @@ endfunction
 " undo 持久化
 " ------------------------------------------------------------------
 if has('persistent_undo')      "check if your vim version supports it
-  set undofile                 "turn on the feature  
+  set undofile
   set undodir=~/.vim/undodir  "directory where the undo files will be stored
 endif 
 

@@ -32,6 +32,7 @@ screenshot in commond line:
     
 2. youcomelateme，提示python....
 
+
  解：需要安装provider-python 
  `pip2 install --user --upgrade neovim`
  （https://neovim.io/doc/user/provider.html#provider-python）
