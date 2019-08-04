@@ -86,9 +86,12 @@ set laststatus=2 " always have status-line
  let g:NERDTreeAutoDeleteBuffer=1
  let g:NERDTreeQuitOnOpen=1 "打开后关闭tree
 
+ "autocmd BufWinEnter * NERDTreeFind
+
 "autocmd vimenter * NERDTree "自动以当前目录打开tree
  nmap nf :NERDTreeFind<CR>"锁定文件对应目录树位置
  nmap <F3> :NERDTreeToggle<CR>
+
 
  " --------------------------------------------------
  Plugin 'scrooloose/nerdcommenter'
@@ -330,15 +333,14 @@ set noswapfile
 :set wildmode=list ":tabe 能显示目录树
 :set linespace=2 "行间距
 
-"自动设当前编辑的文件所在目录为当前工作路径
-autocmd BufEnter * silent! lcd %:p:h
+"自动设置进入的目录为当前目录
+"autocmd BufEnter * silent! lcd %:p:h
+"autocmd vimenter * silent! lcd %:p:h
+
 
 
 syntax on "语法高亮
 
-
-" 自动切换目录为当前编辑文件所在目录
-" au BufRead,BufNewFile,BufEnter * cd %:p:h
 
 " 小程序文件类型
 au BufRead,BufNewFile *.wxss set ft=css syntax=css
