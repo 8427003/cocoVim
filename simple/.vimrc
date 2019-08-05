@@ -91,6 +91,7 @@ set laststatus=2 " always have status-line
 "autocmd vimenter * NERDTree "自动以当前目录打开tree
  nmap nf :NERDTreeFind<CR>"锁定文件对应目录树位置
  nmap <F3> :NERDTreeToggle<CR>
+ nmap <c-[><c-[> :NERDTreeToggle<CR>
 
 
  " --------------------------------------------------
