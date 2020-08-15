@@ -17,9 +17,9 @@ set fileencodings=utf-8,gb18030,gbk,gb2312,big5
 " ------------------------------------------------------------------
 " tab 缩进设置
 " ------------------------------------------------------------------
-set cindent shiftwidth=4 " set cindent on to autoinent when editing c/c++ file, with 4 shift width
-set tabstop=4 " set tabstop to 4 characters
-set softtabstop=4
+set cindent shiftwidth=2 " set cindent on to autoinent when editing c/c++ file, with 4 shift width
+set tabstop=2 " set tabstop to 4 characters
+set softtabstop=2
 set expandtab " set expandtab on, the tab will be change to space automaticaly
 set ve=block " in visual block mode, cursor can be positioned where there is no actual character
 
@@ -116,8 +116,8 @@ let g:EasyMotion_startofline = 0 " keep cursor colum when JK motion
 
 
 " ---------------------------------------------------
-"Plugin 'Yggdroot/indentLine'
-"let g:indentLine_leadingSpaceChar = '.'
+Plugin 'Yggdroot/indentLine'
+let g:indentLine_leadingSpaceChar = '.'
 "let g:indentLine_leadingSpaceEnabled = 1 "此项打开会引起jsx里的html缩进问题
 "let g:indentLine_char = ''
 "let g:indentLine_char = ' '
@@ -209,36 +209,11 @@ let g:showmarks_hlline_upper = 0
 Plugin 'elzr/vim-json'
 let g:vim_json_syntax_conceal = 0
 
+"Plugin 'maxmellon/vim-jsx-pretty'
 
-
-
-" ---------------------------------------------------
-" 片段支持
-" Track the engine.
-Plugin 'SirVer/ultisnips'
-" Snippets are separated from the engine. Add this if you want them:
-Plugin 'honza/vim-snippets'
-
-" Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
-let g:UltiSnipsExpandTrigger = "<nop>" "直接<Enter>就不能换行了，why?
-
-" 模拟<Enter>
-" https://github.com/SirVer/ultisnips/issues/376
-function ExpandSnippetOrCarriageReturn()
-    let snippet = UltiSnips#ExpandSnippetOrJump()
-    if g:ulti_expand_or_jump_res > 0
-        return snippet
-    else
-        return "\<CR>"
-    endif
-endfunction
-inoremap <expr> <CR> pumvisible() ? "<C-R>=ExpandSnippetOrCarriageReturn()<CR>" : "\<CR>"
-
-let g:UltiSnipsJumpForwardTrigger="<c-f>"
-let g:UltiSnipsJumpBackwardTrigger="<c-b>"
-
-" If you want :UltiSnipsEdit to split your window.
-let g:UltiSnipsEditSplit="vertical"
+Plugin 'leafgarland/typescript-vim'
+"Plugin 'ianks/vim-tsx'
+Plugin 'Quramy/tsuquyomi'
 
 
 " --------------------------------------------------
