@@ -36,24 +36,44 @@ set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 Plugin 'VundleVim/Vundle.vim'
 
-
-Plugin 'trusktr/seti.vim'
-
 " ---------------------------------------------------
 "vim-airline
 Plugin 'bling/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
-let g:airline_powerline_fonts = 1
-let g:airline_theme='monochrome'
+let g:airline_powerline_fonts = 0
+"let g:airline_theme='monochrome'
+let g:airline_theme='hybrid'
 let g:airline_section_z = '%l:%c'
 let g:airline_section_warning=''
 let g:airline_section_x=''
 set laststatus=2 " always have status-line
 
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#tab_nr_type = 1 " tab number
+let g:airline#extensions#tabline#formatter = 'short_path'
+
+let g:airline#extensions#tabline#buffer_idx_mode = 1
+nmap <leader>1 <Plug>AirlineSelectTab1
+nmap <leader>2 <Plug>AirlineSelectTab2
+nmap <leader>3 <Plug>AirlineSelectTab3
+nmap <leader>4 <Plug>AirlineSelectTab4
+nmap <leader>5 <Plug>AirlineSelectTab5
+nmap <leader>6 <Plug>AirlineSelectTab6
+nmap <leader>7 <Plug>AirlineSelectTab7
+nmap <leader>8 <Plug>AirlineSelectTab8
+nmap <leader>9 <Plug>AirlineSelectTab9
+nmap <leader>w :bdelete<cr>
+
+
+"------------------------------------------------------
+Plugin 'tpope/vim-obsession'
+Plugin 'dhruvasagar/vim-prosession'
+let g:session_autosave = 'yes'
+let g:session_autoload = 'yes'
+
 
  " ---------------------------------------------------
  " ctrlp: invoke by <ctrl-p>
- "Plugin 'kien/ctrlp.vim' 不再维护
  Plugin 'ctrlpvim/ctrlp.vim'
  let g:ctrlp_match_window = 'bottom,order:ttb,min:30,max:30,results:30'
  let g:ctrlp_follow_symlinks = 2
@@ -73,10 +93,12 @@ set laststatus=2 " always have status-line
 
  nmap <CR> :CtrlPBuffer<CR>
 
+
  " ---------------------------------------------------
  " nerdtree: invoke by :NERDTreeToggle
  Plugin 'scrooloose/nerdtree'
  let g:NERDTreeWinSize = 30
+ let g:NERDTreeWinSizeMax=30
  let g:NERDTreeMouseMode = 1
  let g:NERDTreeMapToggleZoom = '<Space>'
  let g:NERDTreeMinimalUI=1 "不显示帮助面板
@@ -95,11 +117,10 @@ set laststatus=2 " always have status-line
 
 
  " --------------------------------------------------
+ " 智能注释代码，会根据代码的类型自动选择注释类型 leader + //
  Plugin 'scrooloose/nerdcommenter'
  vnoremap <leader>// :call NERDComment(0,"toggle")<CR>
  nnoremap <leader>// :call NERDComment(0,"toggle")<CR>
-
-
 
 
 " ---------------------------------------------------
@@ -116,6 +137,7 @@ let g:EasyMotion_startofline = 0 " keep cursor colum when JK motion
 
 
 " ---------------------------------------------------
+" 缩进显示规则
 Plugin 'Yggdroot/indentLine'
 let g:indentLine_leadingSpaceChar = '.'
 "let g:indentLine_leadingSpaceEnabled = 1 "此项打开会引起jsx里的html缩进问题
@@ -139,31 +161,35 @@ let g:ycm_semantic_triggers = {
 set completeopt-=preview
 
 
-Plugin 'marijnh/tern_for_vim'
-" must run 'npm install' in ~/.vim/tern_for_vim
-" and add ~/.tern_project
+" -------------------------------------------------
+"  自动补全，由于youcompolteMe依赖tern已经内置，所以不需要额外安装。但是配置是需要的
+"  只能是出现的关键字。tern可以提示api，比如window.getElemenById
+"  使用方法参考https://wxnacy.com/2017/09/22/vim-plugin-tern/
+"  Plugin 'marijnh/tern_for_vim'
+"  and add ~/.tern_project
+"  配置参考https://medium.com/vim-drops/javascript-autocompletion-on-vim-4fea7f6934e2
+ "{
+  "libs": [
+    "browser",
+    "ecmascript",
+    "jquery",
+    "react",
+    "underscore"
+  "],
+  "plugins": {
+    "node": {},
+    "esmodules": {}
+  "}
+"}
 
 
-" ---------------------------------------------------
-Plugin 'othree/xml.vim' "html closeTag is ok
-
-" ---------------------------------------------------
-"template
-Plugin '8427003/vim-template'
 
 
 " ---------------------------------------------------
 Plugin 'Raimondi/delimitMate' "() {} 括号匹配 is ok
-"let delimitMate_expand_cr = 1 "let -R indent
-"au FileType mail let b:delimitMate_expand_cr = 1
-"inoremap <expr> <Tab> <C-Tab>
+let delimitMate_expand_cr = 1 "let -R indent
+inoremap <expr> <Tab> <C-Tab>
 
-
-" ---------------------------------------------------
-" vim-javascript 代码高亮
-Plugin 'pangloss/vim-javascript'
-Plugin 'mxw/vim-jsx'
-let g:jsx_ext_required = 0
 
 
  " ---------------------------------------------------
@@ -174,20 +200,19 @@ let g:jsx_ext_required = 0
 
 " ---------------------------------------------------
 Plugin 'ntpeters/vim-better-whitespace'
-nnoremap <unique> <leader>w :StripWhitespace<CR>
 
 
 " ---------------------------------------------------
-Plugin 'roman/golden-ratio'
+"Plugin 'roman/golden-ratio'
 
 " ---------------------------------------------------
 Plugin 'heavenshell/vim-jsdoc' " 函数注释
 nmap <silent> tt <Plug>(jsdoc)
+"required
+"cd to <vim-jsdoc path>
+"make install
 
-" ---------------------------------------------------
-" ex-colorschemes
-Plugin 'tomasr/molokai'
-let g:rehash256 = 1
+
 
 " ---------------------------------------------------
 " ex-showmarks: invoke by m... or <leader>mm, <leader>ma
@@ -204,16 +229,56 @@ let g:showmarks_hlline_lower = 1
 let g:showmarks_hlline_upper = 0
 
 
+" ========================主题颜色 start=========================
+"template
+Plugin '8427003/vim-template'
+
+" ex-colorschemes
+Plugin 'tomasr/molokai'
+let g:rehash256 = 1
+
+" ex-colorschemes
+Plugin 'w0ng/vim-hybrid'
+
+""==============================主题颜色 end===================
+
+
+"====================================语言相关处理 start==========================================
+"
+" 语法高亮，所有语言，经测试不靠谱，所以去掉, 还是每种语言引入单独的
+"Plugin 'sheerun/vim-polyglot'
+
 " ---------------------------------------------------
-" elzr/vim-json
-Plugin 'elzr/vim-json'
+Plugin 'othree/xml.vim' "html closeTag is ok
+
+" ---------------------------------------------------
+" 默认的json显示会把引号去除，这个插件会加上
+"Plugin 'elzr/vim-json'
 let g:vim_json_syntax_conceal = 0
 
-"Plugin 'maxmellon/vim-jsx-pretty'
+" ---------------------------------------------------
+" vim-javascript 代码高亮
+Plugin 'pangloss/vim-javascript'
 
+"ts 语法不然会出现缩进错误--------------------------------------------------
 Plugin 'leafgarland/typescript-vim'
-"Plugin 'ianks/vim-tsx'
-Plugin 'Quramy/tsuquyomi'
+
+"tsx不然xml标签无法缩进
+Plugin 'peitalin/vim-jsx-typescript'
+"set filetypes as typescript.tsx
+autocmd BufNewFile,BufRead *.tsx,*.jsx set filetype=typescript.tsx
+
+
+
+"
+"---------------------------ts语法报错提示-------------------
+"错误时详细提示底部多行，不过youcompleMe 或dense-analysis/ale 已支持简单（底部单行)提示
+"Plugin 'Quramy/tsuquyomi'
+
+"项目文里.eslintrc.js这种提示,
+"不过youcompleMe已经支持ts的报错，但是像末尾是否应该加分号这种youcompleteme不支持，所以可以关闭
+"Plugin 'dense-analysis/ale'
+"====================================语言相关处理 end==========================================
 
 
 " --------------------------------------------------
@@ -365,8 +430,15 @@ au BufReadPost * if line("'\"") > 0|if line("'\"") <= line("$")|exe("norm '\"")|
 " 主题配色
 " ------------------------------------------------------------------
 let g:molokai_original = 1
-colorscheme molokai
-" colorscheme dracula
+"colorscheme molokai
+"colorscheme dracula
+
+set background=dark
+
+let g:hybrid_custom_term_colors = 1
+let g:hybrid_reduced_contrast = 1 " Remove this line if using the default palette.
+colorscheme hybrid
+"colorscheme gruvbox
 
 
 " ------------------------------------------------------------------
@@ -395,8 +467,8 @@ hi ShowMarksHLm ctermfg=161 ctermbg=235 cterm=bold guifg=red guibg=#232526
 
 " 切换窗口
 "ctrl+w -> leader + w
-vnoremap <leader>w <c-w>w
-nnoremap <leader>w <c-w>w
+"vnoremap <leader>w <c-w>w
+"nnoremap <leader>w <c-w>w
 
 
 " ------------------------------------------------------------------
