@@ -266,7 +266,7 @@ Plugin 'leafgarland/typescript-vim'
 "tsx不然xml标签无法缩进
 Plugin 'peitalin/vim-jsx-typescript'
 "set filetypes as typescript.tsx
-autocmd BufNewFile,BufRead *.tsx,*.jsx set filetype=typescript.tsx
+autocmd BufNewFile,BufRead *.tsx,*.jsx,*.js set filetype=typescript.tsx
 
 
 
