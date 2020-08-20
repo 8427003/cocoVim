@@ -253,7 +253,7 @@ Plugin 'othree/xml.vim' "html closeTag is ok
 
 " ---------------------------------------------------
 " 默认的json显示会把引号去除，这个插件会加上
-"Plugin 'elzr/vim-json'
+Plugin 'elzr/vim-json'
 let g:vim_json_syntax_conceal = 0
 
 " ---------------------------------------------------
