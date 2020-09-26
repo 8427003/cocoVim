@@ -13,6 +13,8 @@ set nu! " show line number
 let &termencoding=&encoding
 set fileencodings=utf-8,gb18030,gbk,gb2312,big5
 
+" 关掉bell声音当无效移动时
+set belloff=all
 
 " ------------------------------------------------------------------
 " tab 缩进设置
@@ -48,11 +50,11 @@ let g:airline_section_warning=''
 let g:airline_section_x=''
 set laststatus=2 " always have status-line
 
-let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#tabline#tab_nr_type = 1 " tab number
-let g:airline#extensions#tabline#formatter = 'short_path'
+"let g:airline#extensions#tabline#enabled = 1
+"let g:airline#extensions#tabline#tab_nr_type = 1 " tab number
+"let g:airline#extensions#tabline#formatter = 'short_path'
 
-let g:airline#extensions#tabline#buffer_idx_mode = 1
+"let g:airline#extensions#tabline#buffer_idx_mode = 1
 nmap <leader>1 <Plug>AirlineSelectTab1
 nmap <leader>2 <Plug>AirlineSelectTab2
 nmap <leader>3 <Plug>AirlineSelectTab3
@@ -65,11 +67,38 @@ nmap <leader>9 <Plug>AirlineSelectTab9
 nmap <leader>w :bdelete<cr>
 
 
-"------------------------------------------------------
-Plugin 'tpope/vim-obsession'
-Plugin 'dhruvasagar/vim-prosession'
-let g:session_autosave = 'yes'
-let g:session_autoload = 'yes'
+"--------------------session-------------------------------
+
+Plugin 'mhinz/vim-startify'
+" Read ~/.NERDTreeBookmarks file and takes its second column
+function! s:nerdtreeBookmarks()
+    let bookmarks = systemlist("cut -d' ' -f 2 ~/.NERDTreeBookmarks")
+    let bookmarks = bookmarks[0:-2] " Slices an empty last line
+    return map(bookmarks, "{'line': v:val, 'path': v:val}")
+endfunction
+
+"fix: Error detected while processing BufLeave Auto Commands for NERDtree*: E121: Undefined variable: b:NERDTree
+set sessionoptions-=blank
+
+let g:startify_files_number = 5
+let g:startify_enable_special =  0 "关闭empty和quit
+let g:startify_change_to_vcs_root = 1
+let g:startify_session_autoload = 1
+let g:startify_session_persistence = 1
+let g:startify_session_delete_buffers = 1
+let g:startify_session_before_save = [
+      \ 'echo "Cleaning up before saving.."',
+      \'silent! NERDTreeTabsClose'
+      \ ]
+
+
+let g:startify_lists = [
+      \ { 'type': function('s:nerdtreeBookmarks'), 'header': ['   NERDTree Bookmarks']},
+      \ { 'type': 'sessions',  'header': ['   Sessions']       },
+      \ { 'type': 'dir', 'header': ['   MRU '. getcwd()] },
+      \ { 'type': 'bookmarks', 'header': ['   Bookmarks']      }
+      \]
+
 
 
  " ---------------------------------------------------
@@ -81,6 +110,22 @@ let g:session_autoload = 'yes'
  let g:ctrlp_cache_dir = $HOME.'/.cache/ctrlp'
  let g:ctrlp_regexp = 1
  let g:ctrlp_working_path_mode = 'rc'
+
+
+ "https://vi.stackexchange.com/questions/10016/stop-ctrlp-from-opening-in-nerdtree/11300#11300
+ "How can I stop CtrlP from opening files in NERDTree, and force it to open them in the main window
+ function! CtrlPCommand()
+    let c = 0
+    let wincount = winnr('$')
+    " Don't open it here if current buffer is not writable (e.g. NERDTree)
+    while !empty(getbufvar(+expand("<abuf>"), "&buftype")) && c < wincount
+        exec 'wincmd w'
+        let c = c + 1
+    endwhile
+    exec 'CtrlP'
+endfunction
+let g:ctrlp_cmd = 'call CtrlPCommand()'
+
 
  " ignore
  set wildignore+=*/tmp/*,*/node_modules/*,*\\bower_components\\*,*.so,*.swp,*.zip     " MacOSX/Linux
@@ -97,20 +142,26 @@ let g:session_autoload = 'yes'
  " ---------------------------------------------------
  " nerdtree: invoke by :NERDTreeToggle
  Plugin 'scrooloose/nerdtree'
- let g:NERDTreeWinSize = 30
- let g:NERDTreeWinSizeMax=30
+ let g:NERDTreeWinSize = 40
+ let g:NERDTreeWinSizeMax= 100
  let g:NERDTreeMouseMode = 1
- let g:NERDTreeMapToggleZoom = '<Space>'
+ let g:NERDTreeMapToggleZoom = 'a'
  let g:NERDTreeMinimalUI=1 "不显示帮助面板
  let g:NERDTreeDirArrows=1 "目录箭头 1 显示箭头  0传统+-|号
  let g:NERDTreeShowHidden=1 "显示隐藏文件
- let g:NERDTreeWinPos = "left"
- let g:NERDTreeAutoDeleteBuffer=1
- let g:NERDTreeQuitOnOpen=1 "打开后关闭tree
+ let g:NERDTreeWinPos = 'left'
+ let g:NERDTreeAutoDeleteBuffer=0
+ let g:NERDTreeQuitOnOpen=0 "打开后关闭tree
 
- "autocmd BufWinEnter * NERDTreeFind
+ Plugin 'unkiwii/vim-nerdtree-sync'
+ let g:nerdtree_sync_cursorline = 1
+ let g:NERDTreeHighlightCursorline = 1
 
-"autocmd vimenter * NERDTree "自动以当前目录打开tree
+
+ "vim . first open, select file not hide tree
+ autocmd StdinReadPre * let s:std_in=1
+ autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | wincmd p | ene | exe 'NERDTree' argv()[0] | endif
+
  nmap nf :NERDTreeFind<CR>"锁定文件对应目录树位置
  nmap <F3> :NERDTreeToggle<CR>
  nmap <c-[><c-[> :NERDTreeToggle<CR>
@@ -152,6 +203,7 @@ Plugin 'Valloric/YouCompleteMe'
 let g:ycm_key_list_select_completion = ['<c-j>', '<Down>','<Tab>']
 let g:ycm_key_list_previous_completion = ['<Up>','<c-k>']
 let g:ycm_disable_for_files_larger_than_kb = 1024
+nmap <leader>g :YcmDiags<CR>
 
 " add css complete
 let g:ycm_semantic_triggers = {
