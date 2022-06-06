@@ -153,7 +153,7 @@ let g:ctrlp_cmd = 'call CtrlPCommand()'
  let g:NERDTreeAutoDeleteBuffer=0
  let g:NERDTreeQuitOnOpen=0 "打开后关闭tree
 
- Plugin 'unkiwii/vim-nerdtree-sync'
+ "Plugin 'unkiwii/vim-nerdtree-sync'
  let g:nerdtree_sync_cursorline = 1
  let g:NERDTreeHighlightCursorline = 1
 
@@ -236,11 +236,15 @@ set completeopt-=preview
 
 
 
-
 " ---------------------------------------------------
 Plugin 'Raimondi/delimitMate' "() {} 括号匹配 is ok
-let delimitMate_expand_cr = 1 "let -R indent
-inoremap <expr> <Tab> <C-Tab>
+
+imap <expr> <CR> delimitMate#WithinEmptyPair() ?
+   \ "<Plug>delimitMateCR" :
+   \ delimitMate#ShouldJump() ?
+   \ "<Plug>delimitMateS-Tab" :
+   \ "<CR>"
+
 
 
 
@@ -320,7 +324,10 @@ Plugin 'peitalin/vim-jsx-typescript'
 "set filetypes as typescript.tsx
 autocmd BufNewFile,BufRead *.tsx,*.jsx,*.js set filetype=typescript.tsx
 
+Plugin 'alampros/vim-styled-jsx'
 
+
+Plugin 'fatih/vim-go'
 
 "
 "---------------------------ts语法报错提示-------------------
