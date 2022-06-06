@@ -239,6 +239,7 @@ set completeopt-=preview
 " ---------------------------------------------------
 Plugin 'Raimondi/delimitMate' "() {} 括号匹配 is ok
 
+" 常见mapp 参考https://deepzz.com/post/vim-vimrc-for-go.html
 imap <expr> <CR> delimitMate#WithinEmptyPair() ?
    \ "<Plug>delimitMateCR" :
    \ delimitMate#ShouldJump() ?
