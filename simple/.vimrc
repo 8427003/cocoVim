@@ -138,6 +138,8 @@ let g:ctrlp_cmd = 'call CtrlPCommand()'
 
  nmap <CR> :CtrlPBuffer<CR>
 
+"https://medium.com/@kuiro5/best-way-to-set-up-ctags-with-neovim-37be99c1bd11
+ Plugin 'ludovicchabant/vim-gutentags'
 
  " ---------------------------------------------------
  " nerdtree: invoke by :NERDTreeToggle
@@ -164,7 +166,7 @@ let g:ctrlp_cmd = 'call CtrlPCommand()'
 
  nmap nf :NERDTreeFind<CR>"锁定文件对应目录树位置
  nmap <F3> :NERDTreeToggle<CR>
- nmap <c-[><c-[> :NERDTreeToggle<CR>
+ "nmap <c-[><c-[> :NERDTreeToggle<CR>
 
 
  " --------------------------------------------------
