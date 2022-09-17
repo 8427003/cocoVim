@@ -140,6 +140,7 @@ let g:ctrlp_cmd = 'call CtrlPCommand()'
 
 "https://medium.com/@kuiro5/best-way-to-set-up-ctags-with-neovim-37be99c1bd11
  Plugin 'ludovicchabant/vim-gutentags'
+ let g:gutentags_cache_dir = expand('~/.vim/ctags/')
 
  " ---------------------------------------------------
  " nerdtree: invoke by :NERDTreeToggle
