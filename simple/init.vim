@@ -30,6 +30,8 @@ Plug 'EdenEast/nightfox.nvim' "支持自定义主题配色扩展
 
 """"""""""""""""""""""""""""""""""lsp start""""""""""""""""""""""""""""""""
 Plug 'williamboman/nvim-lsp-installer' "lsp 服务端管理
+Plug 'williamboman/mason.nvim'
+Plug 'williamboman/mason-lspconfig.nvim'
 Plug 'neovim/nvim-lspconfig' "lsp 客户端配置
 
 " autocomplation 和 complation 是有区别的
@@ -51,7 +53,7 @@ Plug 'hrsh7th/vim-vsnip'
 "Plug 'glepnir/lspsaga.nvim' "lsp 更高性能sug UI 没用
 """"""""""""""""""""""""""""""""""lsp end""""""""""""""""""""""""""""""""
 
-Plug 'lewis6991/gitsigns.nvim' "git 显示最近一行代码被谁修改过
+"Plug 'lewis6991/gitsigns.nvim' "git 显示最近一行代码被谁修改过
 Plug 'akinsho/toggleterm.nvim' "ctrl + t 弹出shell命令行
 
 Plug 'moll/vim-bbye' " 暂时没有，用来删除当前tab，可以自动锁定到下一个tab，区别与:q 不能定位到下一个tab
@@ -60,14 +62,16 @@ Plug 'lukas-reineke/indent-blankline.nvim' "缩进
 
 Plug 'numToStr/Comment.nvim' "leader + / 批量注释代码
 "Plug 'JoosepAlviste/nvim-ts-context-commentstring'
-Plug 'ahmedkhalf/project.nvim' " 暂时没用 
+"Plug 'ahmedkhalf/project.nvim' " 暂时没用 
+Plug 'rmagatti/auto-session'
+Plug 'zwhitchcox/auto-session-nvim-tree'
 
 Plug 'akinsho/bufferline.nvim' "控制配置上面tab样式
 " These commands will navigate through buffers in order regardless of which mode you are using
 " e.g. if you change the order of buffers :bnext and :bprevious will not respect the custom ordering
 
 
-"语法高亮，缩进
+"base-必须-语法高亮，缩进
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}  " We recommend updating the parsers on update
 
 " List ends here. Plugins become visible to Vim after this call.
@@ -156,7 +160,7 @@ require("toggleterm").setup({
   open_mapping = [[<c-t>]],
 })
 
-
+--[[
 require('gitsigns').setup({
   current_line_blame = true, -- Toggle with `:Gitsigns toggle_current_line_blame`
   current_line_blame_opts = {
@@ -166,14 +170,8 @@ require('gitsigns').setup({
     ignore_whitespace = false,
   },
 })
+--]]
 
---[[
-require("project_nvim").setup {
-  manual_mode = true,
-    -- your configuration comes here
-    -- or leave it empty to use the default settings
-    -- refer to the configuration section below
-  }
 --[[
 require('Comment').setup {
   pre_hook = function(ctx)
@@ -202,6 +200,20 @@ require("bufferline").setup{
   }
 }
 
+local auto_session = require("auto-session")
+local auto_session_nvim_tree = require("auto-session-nvim-tree")
+auto_session.setup {
+  log_level = "info",
+  -- auto_session_suppress_dirs = { "~/", "~/Projects", "~/Downloads", "/", "~/git" },
+  auto_session_use_git_branch = false,
+  auto_session_enable_last_session = true,
+  auto_session_enabled = true,
+  cwd_change_handling = {
+    restore_upcoming_session = true, -- This is necessary!!
+  },
+}
+auto_session_nvim_tree.setup(auto_session)
+vim.o.sessionoptions="blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal,localoptions"
 
 require("indent_blankline").setup {
     show_end_of_line = false,
@@ -210,8 +222,10 @@ require("indent_blankline").setup {
 
 require("nvim-autopairs").setup {}
 require("nvim-lsp-installer").setup {
-  automatic_installation = true
+  --automatic_installation = true
 }
+require("mason").setup {}
+require("mason-lspconfig").setup{}
 
 
 -- Mappings.
@@ -277,11 +291,6 @@ require('telescope').setup {
 }
 require('telescope').load_extension('fzf')
 require('telescope.builtin').buffers({ sort_lastused = true, ignore_current_buffer = true })
-
-
-
-
-
 
 
 local opts = { noremap=true, silent=true }
@@ -377,6 +386,13 @@ local lsp_flags = {
     flags = lsp_flags,
   }
 
+  require('lspconfig')['eslint'].setup {
+    capabilities = capabilities,
+    on_attach = on_attach,
+    flags = lsp_flags,
+  }
+
+
 
 vim.o.updatetime = 800
 vim.cmd [[autocmd! CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, {focus=false})]]
@@ -385,15 +401,16 @@ vim.diagnostic.config({
   update_in_insert = false,
 })
 
-
-require('nvim-treesitter.configs').setup({
+require('nvim-treesitter.configs').setup{
+  ensure_installed = {'javascript', 'typescript', 'tsx', 'json', 'html'},
+  auto_install = true,
   highlight = {
     enable=true
   },
   indent = {
     enable=true
   }
-})
+}
 
 
 require('nightfox').setup({
@@ -504,6 +521,5 @@ keymap("x", "<leader>/", '<ESC><CMD>lua require("Comment.api").toggle_linewise_o
 
 
 EOF
-
 
 
